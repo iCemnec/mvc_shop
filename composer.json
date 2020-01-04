@@ -1,0 +1,23 @@
+{
+    "name": "user/ishop.loc",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app",
+            "Core\\": "core"
+        },
+        "files": [
+            "config/Config.php",
+            "config/constant.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Irina P.",
+            "email": "icemnec@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^2.0"
+    }
+}

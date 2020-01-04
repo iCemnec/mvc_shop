@@ -1,0 +1,10 @@
+.container .container-main {
+    min-height: 500px;
+}
+.login-form {
+    width: 25%;
+    margin: 5% auto;
+}
+.red {
+    color: red;
+}

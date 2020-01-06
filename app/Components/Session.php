@@ -36,6 +36,7 @@ class Session
                     Logger::WARNING
                 )
             );
+            $log->warning($e->getMessage());
         }
     }
 
@@ -58,6 +59,7 @@ class Session
                     Logger::WARNING
                 )
             );
+            $log->warning($e->getMessage());
         }
     }
 
@@ -81,6 +83,7 @@ class Session
                     Logger::WARNING
                 )
             );
+            $log->warning($e->getMessage());
         }
     }
 
@@ -102,6 +105,7 @@ class Session
                     Logger::WARNING
                 )
             );
+            $log->warning($e->getMessage());
         }
     }
 
@@ -137,6 +141,7 @@ class Session
                     Logger::WARNING
                 )
             );
+            $log->warning($e->getMessage());
         }
     }
 
@@ -160,6 +165,7 @@ class Session
                     Logger::WARNING
                 )
             );
+            $log->warning($e->getMessage());
         }
     }
 
@@ -183,6 +189,7 @@ class Session
                     Logger::WARNING
                 )
             );
+            $log->warning($e->getMessage());
         }
     }
 
@@ -219,6 +226,7 @@ class Session
                     Logger::WARNING
                 )
             );
+            $log->warning($e->getMessage());
         }
     }
 

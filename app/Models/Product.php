@@ -3,12 +3,53 @@
 
 namespace App\Models;
 
+use Core\Model;
 use Exception;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PDOException;
 
-class Product
+class Product extends Model
 {
+
+    public function __construct()
+    {
+        try {
+            $sql = "CREATE TABLE IF NOT EXISTS `products` (
+                `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `title` varchar(255) NOT NULL,
+                `description` text DEFAULT NULL,
+                `quantity` int(11) UNSIGNED NOT NULL,
+                `image_path` varchar(255) DEFAULT NULL,
+                `user_id` int(11) UNSIGNED NOT NULL,
+                `category_id` int(11) UNSIGNED NOT NULL,
+                `brend_id` int(11) UNSIGNED NOT NULL,
+                `created_at` timestamp NOT NULL,
+                `updated_at` timestamp NOT NULL,
+                PRIMARY KEY (`id`),
+                FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+                FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`),
+                FOREIGN KEY (`brend_id`) REFERENCES `brends`(`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+            $db = static::getDB();
+            $db->query($sql);
+            $db = null;
+        } catch (PDOException $e) {
+            $log = new Logger('ProductModel');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::ERROR
+                )
+            );
+            $log->error($e->getMessage());
+            if (DEBUG) {
+                echo "There is some problem with create table " . $e->getMessage();
+            }
+        }
+    }
+
     public function getProducts()
     {
         try {
@@ -24,6 +65,7 @@ class Product
                     Logger::ERROR
                 )
             );
+            $log->error($e->getMessage());
         }
 
     }
@@ -51,6 +93,7 @@ class Product
                     Logger::ERROR
                 )
             );
+            $log->error($e->getMessage());
         }
 
     }

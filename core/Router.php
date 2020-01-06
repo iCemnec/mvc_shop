@@ -96,6 +96,7 @@ class Router
                     Logger::ERROR
                 )
             );
+            $log->error($e->getMessage());
         }
     }
 

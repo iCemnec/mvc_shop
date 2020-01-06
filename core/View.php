@@ -31,6 +31,7 @@ class View
                     Logger::ERROR
                 )
             );
+            $log->error($e->getMessage());
         }
     }
 }

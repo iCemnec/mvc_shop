@@ -18,6 +18,7 @@
         }
     ],
     "require": {
-        "monolog/monolog": "^2.0"
+        "monolog/monolog": "^2.0",
+        "ext-pdo": "*"
     }
 }

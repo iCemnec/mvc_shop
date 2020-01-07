@@ -15,7 +15,8 @@ class LoginController
     public function __construct()
     {
         $this->auth = new Auth();
-        $this->session = new Session();
+//        $this->session = new Session();
+        $this->session = $this->auth->session;
     }
 
     public function index()

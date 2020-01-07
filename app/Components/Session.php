@@ -37,6 +37,8 @@ class Session
                 )
             );
             $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -60,6 +62,8 @@ class Session
                 )
             );
             $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -84,6 +88,8 @@ class Session
                 )
             );
             $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -106,6 +112,8 @@ class Session
                 )
             );
             $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -142,6 +150,8 @@ class Session
                 )
             );
             $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -166,6 +176,8 @@ class Session
                 )
             );
             $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -190,6 +202,8 @@ class Session
                 )
             );
             $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -227,6 +241,8 @@ class Session
                 )
             );
             $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 

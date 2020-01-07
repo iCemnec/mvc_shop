@@ -4,6 +4,7 @@
 namespace App\Models;
 
 
+use App\Components\ErrorHandler;
 use Core\Model;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -39,9 +40,8 @@ class User extends Model
                 )
             );
             $log->error($e->getMessage());
-            if (DEBUG) {
-                echo "There is some problem with create table users " . $e->getMessage();
-            }
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -94,9 +94,8 @@ class User extends Model
                 )
             );
             $log->error($e->getMessage());
-            if (DEBUG) {
-                echo "There is some problem with create user " . $e->getMessage();
-            }
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -135,9 +134,8 @@ class User extends Model
                 )
             );
             $log->error($e->getMessage());
-            if (DEBUG) {
-                echo "There is some problem with update user " . $e->getMessage();
-            }
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -163,9 +161,8 @@ class User extends Model
                 )
             );
             $log->error($e->getMessage());
-            if (DEBUG) {
-                echo "Error: " . $e->getMessage();
-            }
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -191,9 +188,8 @@ class User extends Model
                 )
             );
             $log->error($e->getMessage());
-            if (DEBUG) {
-                echo "Error: " . $e->getMessage();
-            }
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -218,9 +214,8 @@ class User extends Model
                 )
             );
             $log->error($e->getMessage());
-            if (DEBUG) {
-                echo "Error: " . $e->getMessage();
-            }
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 

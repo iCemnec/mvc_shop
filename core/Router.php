@@ -3,6 +3,7 @@
 
 namespace Core;
 
+use App\Components\ErrorHandler;
 use Exception;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -86,7 +87,7 @@ class Router
                     throw new Exception("Controller class {$result['controller']} not found");
                 }
             } else {
-                throw new Exception('No matches');
+                throw new Exception("No matches {$url}");
             }
         } catch (Exception $e) {
             $log = new Logger('Router');
@@ -97,6 +98,8 @@ class Router
                 )
             );
             $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 

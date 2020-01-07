@@ -8,13 +8,14 @@ class Auth
 {
     private $login = "user";
     private $pass = "pass";
+    public $session;
 
     /**
      * Auth constructor.
      */
     public function __construct()
     {
-        new Session();
+        $this->session = new Session();
     }
 
     /**

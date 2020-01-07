@@ -3,6 +3,7 @@
 
 namespace App\Models;
 
+use App\Components\ErrorHandler;
 use Core\Model;
 use Exception;
 use Monolog\Handler\StreamHandler;
@@ -44,9 +45,8 @@ class Product extends Model
                 )
             );
             $log->error($e->getMessage());
-            if (DEBUG) {
-                echo "There is some problem with create table " . $e->getMessage();
-            }
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 
@@ -66,6 +66,8 @@ class Product extends Model
                 )
             );
             $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
 
     }
@@ -94,6 +96,8 @@ class Product extends Model
                 )
             );
             $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
 
     }

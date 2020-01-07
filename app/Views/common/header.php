@@ -1,5 +1,5 @@
 <?php
-$session = new \App\Components\Session();
+//$session = new \App\Components\Session();
 ?>
 <!DOCTYPE html>
 <html lang="en">

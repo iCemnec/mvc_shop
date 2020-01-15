@@ -3,13 +3,14 @@
 
 namespace Core;
 
+use App\Components\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Exception;
 
 class View
 {
-    protected static $viewPath = '/App/Views/';
+    protected static $viewPath = '/app/Views/';
 
     public static function render($view, $args = [])
     {
@@ -32,6 +33,8 @@ class View
                 )
             );
             $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
         }
     }
 }

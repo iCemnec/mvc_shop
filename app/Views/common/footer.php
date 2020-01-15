@@ -7,7 +7,7 @@
                     <div class="footer__widget footer__menu">
                         <div class="ft__logo">
                             <a href="/">
-                                <img src="/public/images/logo/3.png" alt="logo">
+                                <img src="/images/logo/3.png" alt="logo">
                             </a>
                             <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered duskam alteration variations of passages</p>
                         </div>
@@ -20,11 +20,11 @@
                                 <li><a href="#"><i class="bi bi-youtube"></i></a></li>
                             </ul>
                             <ul class="mainmenu d-flex justify-content-center">
-                                <li><a href="/">Trending</a></li>
-                                <li><a href="/">Best Seller</a></li>
+<!--                                <li><a href="/">Trending</a></li>-->
+<!--                                <li><a href="/">Best Seller</a></li>-->
                                 <li><a href="/">All Product</a></li>
-                                <li><a href="/">Wishlist</a></li>
-                                <li><a href="/">Blog</a></li>
+<!--                                <li><a href="/">Wishlist</a></li>-->
+<!--                                <li><a href="/">Blog</a></li>-->
                                 <li><a href="/">Contact</a></li>
                             </ul>
                         </div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="payment text-right">
-                        <img src="/public/images/icons/payment.png" alt="" />
+                        <img src="/images/icons/payment.png" alt="" />
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                         <!-- Start product images -->
                         <div class="product-images">
                             <div class="main-image images">
-                                <img alt="big images" src="/public/images/product/big-img/1.jpg">
+                                <img alt="big images" src="/images/product/big-img/1.jpg">
                             </div>
                         </div>
                         <!-- end product images -->
@@ -139,11 +139,11 @@
 <!-- //Main wrapper -->
 
 <!-- JS Files -->
-<script src="/public/js/vendor/jquery-3.2.1.min.js"></script>
-<script src="/public/js/popper.min.js"></script>
-<script src="/public/js/bootstrap.min.js"></script>
-<script src="/public/js/plugins.js"></script>
-<script src="/public/js/active.js"></script>
+<script src="/js/vendor/jquery-3.2.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/plugins.js"></script>
+<script src="/js/active.js"></script>
 
 </body>
 </html>

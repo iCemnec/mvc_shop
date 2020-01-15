@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="/public/images/favicon.ico">
-    <link rel="apple-touch-icon" href="/public/images/icon.png">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/icon.png">
 
     <!-- Google font (font-family: 'Roboto', sans-serif; Poppins ; Satisfy) -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
@@ -17,15 +17,15 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/css/plugins.css">
-    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/plugins.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     <!-- Cusom css -->
-    <link rel="stylesheet" href="/public/css/custom.css">
+    <link rel="stylesheet" href="/css/custom.css">
 
     <!-- Modernizer js -->
-    <script src="/public/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="/js/vendor/modernizr-3.5.0.min.js" type="application/javascript"></script>
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -41,7 +41,7 @@
                 <div class="col-md-6 col-sm-6 col-6 col-lg-2">
                     <div class="logo">
                         <a href="/">
-                            <img src="/public/images/logo/logo.png" alt="logo images">
+                            <img src="/images/logo/logo.png" alt="logo images">
                         </a>
                     </div>
                 </div>
@@ -49,7 +49,8 @@
                     <nav class="mainmenu__nav">
                         <ul class="meninmenu d-flex justify-content-start">
                             <li class="drop with--one--item"><a href="/">Home</a></li>
-                            <li class="drop"><a href="#">Shop</a>
+                            <li class="drop with--one--item"><a href="/catalog/">Catalog</a></li>
+                            <li class="drop"><a href="/#">Shop</a>
                                 <div class="megamenu mega03">
                                     <ul class="item item03">
                                         <li class="title">Shop Layout</li>
@@ -78,29 +79,30 @@
                             <li class="drop"><a href="shop-grid.html">Books</a>
                                 <div class="megamenu mega03">
                                     <ul class="item item03">
-                                        <li class="title">Categories</li>
+                                        <li class="title">Genres</li>
+
                                         <li><a href="shop-grid.html">Biography </a></li>
                                         <li><a href="shop-grid.html">Business </a></li>
                                         <li><a href="shop-grid.html">Cookbooks </a></li>
                                         <li><a href="shop-grid.html">Health & Fitness </a></li>
                                         <li><a href="shop-grid.html">History </a></li>
                                     </ul>
-                                    <ul class="item item03">
-                                        <li class="title">Customer Favourite</li>
-                                        <li><a href="shop-grid.html">Mystery</a></li>
-                                        <li><a href="shop-grid.html">Religion & Inspiration</a></li>
-                                        <li><a href="shop-grid.html">Romance</a></li>
-                                        <li><a href="shop-grid.html">Fiction/Fantasy</a></li>
-                                        <li><a href="shop-grid.html">Sleeveless</a></li>
-                                    </ul>
-                                    <ul class="item item03">
-                                        <li class="title">Collections</li>
-                                        <li><a href="shop-grid.html">Science </a></li>
-                                        <li><a href="shop-grid.html">Fiction/Fantasy</a></li>
-                                        <li><a href="shop-grid.html">Self-Improvemen</a></li>
-                                        <li><a href="shop-grid.html">Home & Garden</a></li>
-                                        <li><a href="shop-grid.html">Humor Books</a></li>
-                                    </ul>
+<!--                                    <ul class="item item03">-->
+<!--                                        <li class="title">Customer Favourite</li>-->
+<!--                                        <li><a href="shop-grid.html">Mystery</a></li>-->
+<!--                                        <li><a href="shop-grid.html">Religion & Inspiration</a></li>-->
+<!--                                        <li><a href="shop-grid.html">Romance</a></li>-->
+<!--                                        <li><a href="shop-grid.html">Fiction/Fantasy</a></li>-->
+<!--                                        <li><a href="shop-grid.html">Sleeveless</a></li>-->
+<!--                                    </ul>-->
+<!--                                    <ul class="item item03">-->
+<!--                                        <li class="title">Collections</li>-->
+<!--                                        <li><a href="shop-grid.html">Science </a></li>-->
+<!--                                        <li><a href="shop-grid.html">Fiction/Fantasy</a></li>-->
+<!--                                        <li><a href="shop-grid.html">Self-Improvemen</a></li>-->
+<!--                                        <li><a href="shop-grid.html">Home & Garden</a></li>-->
+<!--                                        <li><a href="shop-grid.html">Humor Books</a></li>-->
+<!--                                    </ul>-->
                                 </div>
                             </li>
                             <li class="drop"><a href="shop-grid.html">Kids</a>
@@ -158,8 +160,8 @@
                 <div class="col-md-6 col-sm-6 col-6 col-lg-2">
                     <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                         <li class="shop_search"><a class="search__active" href="#"></a></li>
-                        <li class="wishlist"><a href="#"></a></li>
-                        <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">3</span></a>
+                        <li class="wishlist"><a href="/#/"></a></li>
+                        <li class="shopcart"><a class="cartbox_active" href="/#/"><span class="product_qun">3</span></a>
                             <!-- Start Shopping Cart -->
                             <div class="block-minicart minicart__active">
                                 <div class="minicart-content-wrapper">
@@ -354,18 +356,18 @@
         </div>
     </header>
     <!-- //Header -->
-        <!-- Start Search Popup -->
-        <div class="brown--color box-search-content search_active block-bg close__top">
-            <form id="search_mini_form" class="minisearch" action="#">
-                <div class="field__search">
-                    <input type="text" placeholder="Search entire store here...">
-                    <div class="action">
-                        <a href="#"><i class="zmdi zmdi-search"></i></a>
-                    </div>
+    <!-- Start Search Popup -->
+    <div class="brown--color box-search-content search_active block-bg close__top">
+        <form id="search_mini_form" class="minisearch" action="#">
+            <div class="field__search">
+                <input type="text" placeholder="Search entire store here...">
+                <div class="action">
+                    <a href="#"><i class="zmdi zmdi-search"></i></a>
                 </div>
-            </form>
-            <div class="close__wrap">
-                <span>close</span>
             </div>
+        </form>
+        <div class="close__wrap">
+            <span>close</span>
         </div>
-        <!-- End Search Popup -->
+    </div>
+    <!-- End Search Popup -->

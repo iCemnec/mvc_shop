@@ -1,0 +1,6 @@
+[2020-01-13T09:37:15.377514+02:00] Router.ERROR: No matches favicon.ico [] []
+[2020-01-13T09:38:42.142706+02:00] Model.ERROR: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''9'' at line 1 [] []
+[2020-01-13T21:54:59.766727+02:00] Router.ERROR: No matches %3Cbr%20/%3E%3Cb%3ENotice%3C/b%3E:%20%20Undefined%20index:%20img%20in%20%3Cb%3E/var/www/ishop.loc/app/Views/books/index.php%3C/b%3E%20on%20line%20%3Cb%3E19%3C/b%3E%3Cbr%20/%3Eimage/products [] []
+[2020-01-13T21:55:00.387591+02:00] Router.ERROR: No matches %3Cbr%20/%3E%3Cb%3ENotice%3C/b%3E:%20%20Undefined%20index:%20img%20in%20%3Cb%3E/var/www/ishop.loc/app/Views/books/index.php%3C/b%3E%20on%20line%20%3Cb%3E19%3C/b%3E%3Cbr%20/%3Eimage/products [] []
+[2020-01-13T22:24:23.301602+02:00] Router.ERROR: No matches %3Cbr%20/%3E%3Cb%3ENotice%3C/b%3E:%20%20Undefined%20index:%20img%20in%20%3Cb%3E/var/www/ishop.loc/app/Views/books/index.php%3C/b%3E%20on%20line%20%3Cb%3E19%3C/b%3E%3Cbr%20/%3Eimage/products [] []
+[2020-01-13T22:24:24.128396+02:00] Router.ERROR: No matches %3Cbr%20/%3E%3Cb%3ENotice%3C/b%3E:%20%20Undefined%20index:%20img%20in%20%3Cb%3E/var/www/ishop.loc/app/Views/books/index.php%3C/b%3E%20on%20line%20%3Cb%3E19%3C/b%3E%3Cbr%20/%3Eimage/products [] []

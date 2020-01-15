@@ -4,7 +4,7 @@
 namespace App\Controllers;
 
 use Core\Controller;
-use App\Models\Product;
+use App\Models\Book;
 use Core\View;
 use Exception;
 
@@ -12,9 +12,14 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = new Product;
-        $products = $products->getProducts();
+        $book = new Book();
+        $booksNew = $book->showNew();
 
-        View::render('products/index.php', $products);
+        if (!empty($booksNew)) {
+            View::render('common/main.php', $booksNew);
+        } else {
+            View::render('common/main.php');
+        }
+
     }
 }

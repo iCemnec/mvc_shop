@@ -12,53 +12,26 @@ use PDOException;
 
 class User extends Model
 {
-    public function __construct()
-    {
-        try {
-            $sql = "CREATE TABLE IF NOT EXISTS `users` (
-                `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `user_type` ENUM('admin', 'manager', 'customer', 'reseller') DEFAULT 'customer',
-                `first_name` varchar(255) NOT NULL,
-                `last_name` varchar(255) NOT NULL,
-                `email` varchar(255) NOT NULL,
-                `phone` varchar(255) NOT NULL,
-                `password` varchar(255) NOT NULL,
-                `created_at` timestamp NOT NULL,
-                `updated_at` timestamp NOT NULL,
-                PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-            $db = static::getDB();
-            $db->query($sql);
-            $db = null;
-        } catch (PDOException $e) {
-            $log = new Logger('UserModel');
-            $log->pushHandler(
-                new StreamHandler(
-                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
-                    Logger::ERROR
-                )
-            );
-            $log->error($e->getMessage());
-            $error = new ErrorHandler();
-            $error->exceptionHandler($e);
-        }
+    protected static function getTableName(): string
+    {
+        return 'users';
     }
 
-    public static function create($first_name, $last_name, $email, $phone, $password, $user_type)
+    public function create(array $data)
     {
         try {
             $db = static::getDB();
 
             $date = date("Y-m-d H:i:s");
             $stmt = $db->prepare(
-                "INSERT INTO `users` (
+                "INSERT INTO " . static::getTableName() . " (
                             first_name, 
                             last_name, 
                             email, 
                             phone, 
                             password, 
-                            user_type, 
+                            role_id, 
                             created_at, 
                             updated_at
                             ) 
@@ -68,15 +41,16 @@ class User extends Model
                             :email, 
                             :phone, 
                             :password, 
+                            :role_id, 
                             :created_at, 
                             :updated_at
                         )");
-            $stmt->bindParam(':first_name', $first_name);
-            $stmt->bindParam(':last_name', $last_name);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':phone', $phone);
-            $stmt->bindParam(':password', $password);
-            $stmt->bindParam(':user_type', $user_type);
+            $stmt->bindParam(':first_name', $data['first_name']);
+            $stmt->bindParam(':last_name', $data['last_name']);
+            $stmt->bindParam(':email', $data['email']);
+            $stmt->bindParam(':phone', $data['phone']);
+            $stmt->bindParam(':password', $data['password']);
+            $stmt->bindParam(':role_id', $data['role_id']);
             $stmt->bindParam(':created_at', $date);
             $stmt->bindParam(':updated_at', $date);
 
@@ -96,28 +70,30 @@ class User extends Model
             $log->error($e->getMessage());
             $error = new ErrorHandler();
             $error->exceptionHandler($e);
+            return false;
         }
     }
 
-    public function update($data)
+    public function update(array $data)
     {
         try {
             $db = static::getDB();
 
             $date = date("Y-m-d H:i:s");
             $stmt = $db->prepare(
-                "UPDATE `users` SET 
+                "UPDATE " . static::getTableName() . " SET 
                 first_name = :first_name, 
                 last_name = :last_name, 
                 email = :email, 
                 phone = :phone, 
                 updated_at = :updated_at
-                WHERE `id` = :user_id"
+                WHERE id = :user_id"
             );
             $stmt->bindParam(':first_name', $data['first_name']);
             $stmt->bindParam(':last_name', $data['last_name']);
             $stmt->bindParam(':email', $data['email']);
             $stmt->bindParam(':phone', $data['phone']);
+            $stmt->bindParam(':role_id', $data['role_id']);
             $stmt->bindParam(':updated_at', $date);
             $stmt->bindParam(':user_id', $data['id']);
 
@@ -136,86 +112,7 @@ class User extends Model
             $log->error($e->getMessage());
             $error = new ErrorHandler();
             $error->exceptionHandler($e);
-        }
-    }
-
-    public function show($user_id)
-    {
-        try {
-            $db = static::getDB();
-
-            $stmt = $db->prepare("SELECT * FROM `users` WHERE `id` = :user_id");
-            $stmt->bindParam(':user_id', $user_id);
-            $stmt->execute();
-
-            $result = $stmt->fetch();
-            $db = null;
-
-            return !empty($result) ? $result : false;
-        } catch (PDOException $e) {
-            $log = new Logger('UserModel');
-            $log->pushHandler(
-                new StreamHandler(
-                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
-                    Logger::ERROR
-                )
-            );
-            $log->error($e->getMessage());
-            $error = new ErrorHandler();
-            $error->exceptionHandler($e);
-        }
-    }
-
-    public function showAll($limit = 9)
-    {
-        try {
-            $db = static::getDB();
-
-            $stmt = $db->prepare("SELECT * FROM `users` LIMIT :limit");
-            $stmt->bindParam(':limit', $limit);
-            $stmt->execute();
-
-            $result = $stmt->fetchAll();
-            $db = null;
-
-            return !empty($result) ? $result : false;
-        } catch (PDOException $e) {
-            $log = new Logger('UserModel');
-            $log->pushHandler(
-                new StreamHandler(
-                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
-                    Logger::ERROR
-                )
-            );
-            $log->error($e->getMessage());
-            $error = new ErrorHandler();
-            $error->exceptionHandler($e);
-        }
-    }
-
-    public function delete($user_id)
-    {
-        try {
-            $db = static::getDB();
-
-            $stmt = $db->prepare("DELETE FROM `users` WHERE `id` = :user_id");
-            $stmt->bindParam(':user_id', $user_id);
-            $stmt->execute();
-
-            $db = null;
-
-            return true;
-        } catch (PDOException $e) {
-            $log = new Logger('UserModel');
-            $log->pushHandler(
-                new StreamHandler(
-                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
-                    Logger::ERROR
-                )
-            );
-            $log->error($e->getMessage());
-            $error = new ErrorHandler();
-            $error->exceptionHandler($e);
+            return false;
         }
     }
 

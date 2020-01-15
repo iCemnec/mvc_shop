@@ -2,6 +2,7 @@
 
 namespace App\Components;
 
+use Core\DB;
 use Core\Model;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -9,6 +10,8 @@ use PDOException;
 
 class DbInstall
 {
+    use DB;
+
     public function __construct()
     {
         try {

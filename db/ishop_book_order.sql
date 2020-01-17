@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.18, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Linux (x86_64)
 --
 -- Host: localhost    Database: ishop
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,18 +23,18 @@ DROP TABLE IF EXISTS `book_order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `book_order` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `book_id` int(11) unsigned NOT NULL,
-  `order_id` int(11) unsigned NOT NULL,
-  `quantity` int(11) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `book_id` int unsigned NOT NULL,
+  `order_id` int unsigned NOT NULL,
+  `quantity` int unsigned NOT NULL,
   `current_price` float NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `book_id` (`book_id`),
-  KEY `order_id` (`order_id`),
-  CONSTRAINT `book_order_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
-  CONSTRAINT `book_order_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+  KEY `fk_book_order_book_id` (`book_id`),
+  KEY `fk_book_order_order_id` (`order_id`),
+  CONSTRAINT `fk_book_order_book_id` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_book_order_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-13 19:34:20
+-- Dump completed on 2020-01-16 19:14:42

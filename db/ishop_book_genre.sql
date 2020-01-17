@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.18, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Linux (x86_64)
 --
 -- Host: localhost    Database: ishop
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,20 +23,20 @@ DROP TABLE IF EXISTS `book_genre`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `book_genre` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `book_id` int(11) unsigned NOT NULL,
-  `genre_id` int(11) unsigned NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `book_id` int unsigned NOT NULL,
+  `genre_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `book_id` (`book_id`),
-  KEY `genre_id` (`genre_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `book_genre_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
-  CONSTRAINT `book_genre_ibfk_2` FOREIGN KEY (`genre_id`) REFERENCES `genres` (`id`),
-  CONSTRAINT `book_genre_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_book_genre_book_id` (`book_id`),
+  KEY `fk_book_genre_genre_id` (`genre_id`),
+  KEY `fk_book_genre_user_id` (`user_id`),
+  CONSTRAINT `fk_book_genre_book_id` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_book_genre_genre_id` FOREIGN KEY (`genre_id`) REFERENCES `genres` (`id`),
+  CONSTRAINT `fk_book_genre_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +45,7 @@ CREATE TABLE `book_genre` (
 
 LOCK TABLES `book_genre` WRITE;
 /*!40000 ALTER TABLE `book_genre` DISABLE KEYS */;
+INSERT INTO `book_genre` VALUES (1,1,1,1,'2020-01-13 19:54:30','2020-01-13 19:54:32'),(2,2,1,1,'2020-01-13 20:08:30','2020-01-13 20:08:33'),(4,3,1,1,'2020-01-14 07:26:48','2020-01-14 07:26:51'),(5,3,8,1,'2020-01-16 16:34:17','2020-01-16 16:34:20');
 /*!40000 ALTER TABLE `book_genre` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-13 19:34:20
+-- Dump completed on 2020-01-16 19:14:42

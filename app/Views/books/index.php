@@ -1,5 +1,5 @@
 <?php
-\Core\View::render('common/header.php', ['title' => 'Show All Products']);
+\Core\View::render('common/header.php', ['title' => 'Show All Books']);
 ?>
 
     <div class="page-shop-sidebar left--sidebar bg--white section-padding--lg">
@@ -11,30 +11,14 @@
                             <h3 class="wedget__title">Book Genres</h3>
                             <ul>
                             <?php
-                            if (!empty($args)) {
-                                foreach ($args[1] as $genre) {
+                            if (!empty($args[0])) {
+                                foreach ($args[0] as $genre) {
                                     ?>
-                                    <li><a href="/genre/<?php echo (int)$genre['id']; ?>/"><?php echo $genre['title']; ?></a></li>
+                                    <li><a href="/catalog/<?php echo (int)$genre['id']; ?>/"><?php echo $genre['title']; ?></a></li>
                                     <?php
                                 }
                             }
                             ?>
-<!--                                <li><a href="#">Biography <span>(3)</span></a></li>-->
-<!--                                <li><a href="#">Business <span>(4)</span></a></li>-->
-<!--                                <li><a href="#">Cookbooks <span>(6)</span></a></li>-->
-<!--                                <li><a href="#">Health & Fitness <span>(7)</span></a></li>-->
-<!--                                <li><a href="#">History <span>(8)</span></a></li>-->
-<!--                                <li><a href="#">Mystery <span>(9)</span></a></li>-->
-<!--                                <li><a href="#">Inspiration <span>(13)</span></a></li>-->
-<!--                                <li><a href="#">Romance <span>(20)</span></a></li>-->
-<!--                                <li><a href="#">Fiction/Fantasy <span>(22)</span></a></li>-->
-<!--                                <li><a href="#">Self-Improvement <span>(13)</span></a></li>-->
-<!--                                <li><a href="#">Humor Books <span>(17)</span></a></li>-->
-<!--                                <li><a href="#">Harry Potter <span>(20)</span></a></li>-->
-<!--                                <li><a href="#">Land of Stories <span>(34)</span></a></li>-->
-<!--                                <li><a href="#">Kids' Music <span>(60)</span></a></li>-->
-<!--                                <li><a href="#">Toys & Games <span>(3)</span></a></li>-->
-<!--                                <li><a href="#">hoodies <span>(3)</span></a></li>-->
                             </ul>
                         </aside>
                         <aside class="wedget__categories pro--range">
@@ -62,6 +46,11 @@
                 <div class="col-lg-9 col-12 order-1 order-lg-2">
                     <div class="row">
                         <div class="col-lg-12">
+                            <div class="section__title text-center">
+                                <h2 class="title__be--2">All <span class="color--theme">Books</span></h2>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
                             <div class="shop__list__wrapper d-flex flex-wrap flex-md-nowrap justify-content-between">
                                 <div class="shop__list nav justify-content-center" role="tablist">
                                     <a class="nav-item nav-link active" data-toggle="tab" href="#nav-grid" role="tab"><i class="fa fa-th"></i></a>
@@ -86,52 +75,17 @@
                         <div class="shop-grid tab-pane fade show active" id="nav-grid" role="tabpanel">
                             <div class="row">
                             <?php
-                            if (!empty($args)) {
-                                foreach ($args[0] as $book) {
-                                    ?>
-
-
-
-                                <!-- Start Single Product -->
-                                <div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
-                                    <div class="product__thumb">
-                                        <a class="first__img" href="single-product.html"><img src="images/books/1.jpg" alt="product image"></a>
-                                        <a class="second__img animation1" href="single-product.html"><img src="images/books/2.jpg" alt="product image"></a>
-                                        <div class="hot__box">
-                                            <span class="hot-label">HOT</span>
-                                        </div>
-                                    </div>
-                                    <div class="product__content content--center">
-                                        <h4><a href="single-product.html">robin parrish</a></h4>
-                                        <ul class="prize d-flex">
-                                            <li>$35.00</li>
-                                            <li class="old_prize">$35.00</li>
-                                        </ul>
-                                        <div class="action">
-                                            <div class="actions_inner">
-                                                <ul class="add_to_links">
-                                                    <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-                                                    <li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-                                                    <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                                    <li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product__hover--content">
-                                            <ul class="rating d-flex">
-                                                <li class="on"><i class="fa fa-star-o"></i></li>
-                                                <li class="on"><i class="fa fa-star-o"></i></li>
-                                                <li class="on"><i class="fa fa-star-o"></i></li>
-                                                <li><i class="fa fa-star-o"></i></li>
-                                                <li><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Single Product -->
-
-                                    <?php
+                            if (!empty($args[1])) {
+                                foreach ($args[1] as $book) {
+                                    \Core\View::render('books/single-book.php', $book);
                                 }
+                            } else {
+                                ?>
+                                <div class="section__title text-center">
+                                    <h2 class="title__be--2">No <span class="color--theme">Books</span></h2>
+                                    <p>There are no books in the store.</p>
+                                </div>
+                                <?php
                             }
                             ?>
                             </div>

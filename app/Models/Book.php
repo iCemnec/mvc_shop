@@ -5,7 +5,6 @@ namespace App\Models;
 
 use App\Components\ErrorHandler;
 use Core\Model;
-use Exception;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PDOException;
@@ -134,9 +133,9 @@ class Book extends Model
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare("SELECT b.title, b.pub_year, b.image_path, p.price,
-                c.code_currency, a.first_name, a.last_name 
-                FROM books AS b JOIN prices AS p ON b.id=p.book_id 
+            $stmt = $db->prepare("SELECT b.id, b.title, b.pub_year, b.image_path, p.price,
+                c.code_currency, ab.author_id, a.first_name, a.last_name 
+                FROM " . static::getTableName() . " AS b JOIN prices AS p ON b.id=p.book_id 
                 JOIN currencies AS c ON c.id=p.currency_id
                 JOIN author_book AS ab ON b.id=ab.book_id 
                 JOIN authors AS a ON a.id=ab.author_id
@@ -163,14 +162,50 @@ class Book extends Model
         }
     }
 
-    public function showByGenre(array $data)
+    public function showAll()
     {
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare("SELECT b.title, b.pub_year, b.image_path, 
-                p.price, c.code_currency, a.first_name, a.last_name 
-                FROM books AS b 
+            $stmt = $db->prepare("SELECT DISTINCT b.id, b.title, b.pub_year, b.image_path,
+                p.price, c.code_currency, ab.author_id, a.first_name, a.last_name
+                FROM " . static::getTableName() . " AS b
+                JOIN book_genre AS bg ON b.id=bg.book_id
+                JOIN prices AS p ON b.id=p.book_id
+                JOIN currencies AS c ON c.id=p.currency_id
+                JOIN author_book AS ab ON b.id=ab.book_id
+                JOIN authors AS a ON a.id=ab.author_id
+                WHERE p.price_type_id=1;");
+
+            $stmt->execute();
+
+            $result = $stmt->fetchAll();
+            $db = null;
+
+            return !empty($result) ? $result : false;
+        } catch (PDOException $e) {
+            $log = new Logger('BookModel');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::ERROR
+                )
+            );
+            $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+            return false;
+        }
+    }
+
+    public function showBooksByGenreId(array $data)
+    {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare("SELECT b.id, b.title, b.pub_year, b.image_path, 
+                p.price, c.code_currency, ab.author_id, a.first_name, a.last_name 
+                FROM " . static::getTableName() . " AS b 
                 JOIN book_genre AS bg ON b.id=bg.book_id
                 JOIN prices AS p ON b.id=p.book_id 
                 JOIN currencies AS c ON c.id=p.currency_id
@@ -179,6 +214,79 @@ class Book extends Model
                 WHERE bg.genre_id=:genre_id AND p.price_type_id=1;");
 
             $stmt->bindParam(':genre_id', $data['id']);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll();
+            $db = null;
+
+            return !empty($result) ? $result : false;
+        } catch (PDOException $e) {
+            $log = new Logger('BookModel');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::ERROR
+                )
+            );
+            $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+            return false;
+        }
+    }
+
+    public function show(array $data)
+    {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare("SELECT b.*, 
+                p.price, c.code_currency, ab.author_id, a.first_name, a.last_name 
+                FROM " . static::getTableName() . " AS b 
+                JOIN book_genre AS bg ON b.id=bg.book_id
+                JOIN prices AS p ON b.id=p.book_id 
+                JOIN currencies AS c ON c.id=p.currency_id
+                JOIN author_book AS ab ON b.id=ab.book_id 
+                JOIN authors AS a ON a.id=ab.author_id
+                WHERE b.id=:id AND p.price_type_id=1;");
+            $stmt->bindParam(':id', $data['id']);
+            $stmt->execute();
+
+            $result = $stmt->fetch();
+            $db = null;
+
+            return !empty($result) ? $result : false;
+        } catch (PDOException $e) {
+            $log = new Logger('BookModel');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::ERROR
+                )
+            );
+            $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+            return false;
+        }
+    }
+
+    public function showBooksByAuthorId(array $data)
+    {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare("SELECT b.id, b.title, b.pub_year, b.image_path, 
+                p.price, c.code_currency, ab.author_id, a.first_name, a.last_name 
+                FROM " . static::getTableName() . " AS b 
+                JOIN book_genre AS bg ON b.id=bg.book_id
+                JOIN prices AS p ON b.id=p.book_id 
+                JOIN currencies AS c ON c.id=p.currency_id
+                JOIN author_book AS ab ON b.id=ab.book_id 
+                JOIN authors AS a ON a.id=ab.author_id
+                WHERE ab.author_id=:author_id AND p.price_type_id=1;");
+
+            $stmt->bindParam(':author_id', $data['id']);
             $stmt->execute();
 
             $result = $stmt->fetchAll();

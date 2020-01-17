@@ -13,6 +13,10 @@ class Router
     protected $routes = [];
     protected $params = [];
 
+    /**
+     * @param $route
+     * @param array $params
+     */
     public function add($route, $params = [])
     {
         // Convert the route to a regular expression: escape forward slashes
@@ -39,6 +43,10 @@ class Router
         $this->routes[$route] = $params;
     }
 
+    /**
+     * @param $url
+     * @return bool
+     */
     public function match($url)
     {
         $url = trim($url, '/');
@@ -58,7 +66,7 @@ class Router
 
     /**
      * @param $url
-     * @return bool|int
+     * @return bool
      */
     public function dispatch($url)
     {
@@ -100,6 +108,7 @@ class Router
             $log->error($e->getMessage());
             $error = new ErrorHandler();
             $error->exceptionHandler($e);
+            return false;
         }
     }
 

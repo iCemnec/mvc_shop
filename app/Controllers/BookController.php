@@ -10,31 +10,35 @@ use Core\View;
 class BookController extends Controller
 {
     protected $book;
+    protected $genre;
 
     public function __construct($route_params)
     {
         parent::__construct($route_params);
         $this->book = new Book;
+        $this->genre = new Genre();
     }
 
     public function index()
     {
         $books = $this->book->showAll();
 
-        $genre = new Genre();
-        $genres = $genre->showAll();
+        $genres = $this->genre->showAll();
 
-        View::render('books/index.php', [$books, $genres]);
+        if (!empty($books)) {
+            View::render('books/index.php', [$genres, $books]);
+        } else {
+            View::render('books/index.php', [$genres]);
+        }
     }
 
-    public function showGenre(array $data)
+    public function show(array $data)
     {
-        $books = $this->book->showByGenre($data);
-        if (!empty($books)) {
-            View::render('books/genre.php', $books);
-        } else {
-            View::render('books/genre.php');
-        }
+        $book = $this->book->show($data);
+
+        $genres = $this->genre->showGenresByBookId($data);
+
+        View::render('books/book.php', [$book, $genres]);
     }
 
 }

@@ -20,7 +20,7 @@ class View
             $file = dirname(__DIR__) . static::$viewPath . $view;
 
             if (is_readable($file)) {
-                require_once $file;
+                require $file;
             } else {
                 throw new Exception("File {$view} not found.");
             }

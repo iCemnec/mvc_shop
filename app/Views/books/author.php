@@ -1,6 +1,5 @@
 <?php
-$currentGenre = $args[1]['title'];
-\Core\View::render('common/header.php', ['title' => "Show All Books from $currentGenre"]);
+\Core\View::render('common/header.php', ['title' => 'Show All Products']);
 ?>
 
     <div class="page-shop-sidebar left--sidebar bg--white section-padding--lg">
@@ -48,7 +47,7 @@ $currentGenre = $args[1]['title'];
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section__title text-center">
-                                <h2 class="title__be--2">Genre: <span class="color--theme"><?php echo $currentGenre; ?></span></h2>
+                                <h2 class="title__be--2">Genre: <span class="color--theme"><?php echo $args[1]['title']; ?></span></h2>
                             </div>
                         </div>
                         <div class="col-lg-12">

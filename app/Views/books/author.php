@@ -1,5 +1,6 @@
 <?php
-\Core\View::render('common/header.php', ['title' => 'Show All Products']);
+$currentAuthor = $args[1]['first_name'] . " " . $args[1]['last_name'];
+\Core\View::render('common/header.php', ['title' => "Author $currentAuthor"]);
 ?>
 
     <div class="page-shop-sidebar left--sidebar bg--white section-padding--lg">
@@ -47,8 +48,12 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section__title text-center">
-                                <h2 class="title__be--2">Genre: <span class="color--theme"><?php echo $args[1]['title']; ?></span></h2>
+                                <h2 class="title__be--2">Author: <span class="color--theme"><?php echo $currentAuthor; ?></span></h2>
                             </div>
+                            <div class="section__title text-left">
+                                <p><?php echo $args[1]['description']; ?></p>
+                            </div>
+                            <br>
                         </div>
                         <div class="col-lg-12">
                             <div class="shop__list__wrapper d-flex flex-wrap flex-md-nowrap justify-content-between">

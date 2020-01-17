@@ -276,7 +276,7 @@ class Book extends Model
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare("SELECT b.id, b.title, b.pub_year, b.image_path, 
+            $stmt = $db->prepare("SELECT DISTINCT b.id, b.title, b.pub_year, b.image_path, 
                 p.price, c.code_currency, ab.author_id, a.first_name, a.last_name 
                 FROM " . static::getTableName() . " AS b 
                 JOIN book_genre AS bg ON b.id=bg.book_id

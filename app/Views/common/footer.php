@@ -135,6 +135,64 @@
     </div>
 </div>
 <!-- END QUICKVIEW PRODUCT -->
+
+<div class="cd-user-modal">
+    <div class="cd-user-modal-container">
+        <ul class="cd-switcher">
+            <li><a href="">Sign in</a></li>
+            <li><a href="">New account</a></li>
+        </ul>
+
+        <div id="cd-login"> <!-- log in form -->
+            <form class="cd-form">
+                <p class="fieldset">
+                    <label class="image-replace cd-email" for="signin-email">E-mail</label>
+                    <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
+                    <span class="cd-error-message">Error message here!</span>
+                </p>
+
+                <p class="fieldset">
+                    <label class="image-replace cd-password" for="signin-password">Password</label>
+                    <input class="full-width has-padding has-border" id="signin-password" type="password"  placeholder="Password">
+                    <span class="cd-error-message">Error message here!</span>
+                </p>
+
+                <p class="fieldset">
+                    <input class="full-width" type="submit" value="Login">
+                </p>
+            </form>
+        </div> <!-- cd-login -->
+
+        <div id="cd-signup"> <!-- sign up form -->
+            <form class="cd-form">
+                <p class="fieldset">
+                    <label class="image-replace cd-username" for="signup-username">Username</label>
+                    <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+                    <span class="cd-error-message">Error message here!</span>
+                </p>
+
+                <p class="fieldset">
+                    <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                    <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
+                    <span class="cd-error-message">Error message here!</span>
+                </p>
+
+                <p class="fieldset">
+                    <label class="image-replace cd-password" for="signup-password">Password</label>
+                    <input class="full-width has-padding has-border" id="signup-password" type="password" placeholder="Password">
+                    <span class="cd-error-message">Error message here!</span>
+                </p>
+
+                <p class="fieldset">
+                    <input class="full-width has-padding" type="submit" value="Create account">
+                </p>
+            </form>
+        </div> <!-- cd-signup -->
+
+        <span href="" class="cd-close-form">Close</span>
+    </div> <!-- cd-user-modal-container -->
+</div> <!-- cd-user-modal -->
+
 </div>
 <!-- //Main wrapper -->
 
@@ -145,6 +203,7 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/active.js"></script>
 <script src="/js/cart.js"></script>
+<script src="/js/login.js"></script>
 
 </body>
 </html>

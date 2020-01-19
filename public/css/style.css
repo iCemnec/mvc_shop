@@ -1647,12 +1647,13 @@ Elements Styles
   opacity: 0;
   position: absolute;
   right: 0;
-  text-align: center;
+  /*text-align: center;*/
   top: 100%;
   transition: -webkit-transform 0.8s ease 0s, transform 0.8s ease 0s, opacity 0.5s ease 0s, visibility 0.5s ease 0s;
   visibility: hidden;
   z-index: 10;
-  padding-top: 20px; }
+  /*padding-top: 20px; */
+}
   .setting__block.is-visible {
     opacity: 1;
     visibility: visible; }
@@ -1689,9 +1690,9 @@ Elements Styles
       .searchbar__content .content-inner .switcher-currency .label {
         border-bottom: 1px solid #ebebeb;
         color: #363636;
-        cursor: pointer;
+        /*cursor: pointer;*/
         display: block;
-        font-size: 11px;
+        font-size: 14px;
         font-weight: 600;
         line-height: 30px;
         margin: 0 0 10px;
@@ -1701,7 +1702,7 @@ Elements Styles
         text-transform: uppercase; }
         .searchbar__content .content-inner .switcher-currency .label span {
           color: #363636;
-          cursor: pointer;
+          /*cursor: pointer;*/
           font-size: 11px;
           font-weight: 600;
           line-height: 30px;

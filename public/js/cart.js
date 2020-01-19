@@ -73,6 +73,8 @@ const CART = {
             sum += Number(books[i].bookPrice * books[i].bookQty);
         }
 
+        sum = ((sum * 100) / 100).toFixed(2);
+
         $('.product_qun').html(amount);
         $('.total-sum').html(sum);
     },
@@ -165,6 +167,8 @@ const PageCart = {
         for (let i = 0; i < books.length; i++) {
             sum += Number(books[i].bookPrice * books[i].bookQty);
         }
+
+        sum = ((sum * 100) / 100).toFixed(2);
 
         $('.cart-total-sum').html(sum);
     },

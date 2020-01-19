@@ -10,5 +10,7 @@ $router->add('catalog/{id:\d+}', ['controller' => 'GenreController', 'action' =>
 $router->add('book/{id:\d+}', ['controller' => 'BookController', 'action' => 'show']);
 $router->add('author/{id:\d+}', ['controller' => 'AuthorController', 'action' => 'show']);
 
+$router->add('cart', ['controller' => 'CartController', 'action' => 'index']);
+
 $router->add('login', ['controller' => 'LoginController', 'action' => 'index']);
 $router->add('login/welcome', ['controller' => 'LoginController', 'action' => 'show']);

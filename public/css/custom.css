@@ -6,3 +6,22 @@
 	Note: This is custom css. All custom styles (user styles) declare here.
 
 **********************************************************************************/
+
+/*.product_prize .controls{*/
+/*    height: 1.5rem;*/
+/*    cursor: pointer;*/
+/*    width: 11%;*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    background-color: #eee;*/
+/*}*/
+/*.product_prize span:nth-child(1),*/
+/*.product_prize span:nth-child(3){*/
+/*    border: 1px solid #ce7852;*/
+/*    color: #ce7852;*/
+/*    background: #fff;*/
+/*    font-size: 1rem;*/
+/*    line-height: 1.5rem;*/
+/*    padding: 0 0.5rem;*/
+/*    display: block;*/
+/*}*/

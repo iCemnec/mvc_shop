@@ -55,9 +55,15 @@ $book = $args[0];
                                 </div>
                                 <div class="box-tocart d-flex">
                                     <span>Qty</span>
-                                    <input id="qty" class="input-text qty" name="qty" min="1" value="1" title="Qty" max="<?php echo $book['quantity']; ?>" type="number">
+                                    <input id="qty" data-quantity="1" class="input-text qty" name="qty" min="1" value="1" title="Qty" max="<?php echo $book['quantity']; ?>" type="number">
                                     <div class="addtocart__actions">
-                                        <button class="tocart" type="submit" title="Add to Cart">Add to Cart</button>
+                                        <button class="tocart cart" type="submit" title="Add to Cart"
+                                                data-id="<?php echo $book['id']; ?>"
+                                                data-title="<?php echo $book['title']; ?>"
+                                                data-price="<?php echo $book['price']; ?>"
+                                                data-currency="<?php echo $book['code_currency']; ?>"
+                                                data-image-path="<?php echo DIR_IMAGE_BOOK . $book['image_path']; ?>"
+                                        >Add to Cart</button>
                                     </div>
                                 </div>
                                 <div class="product_meta">

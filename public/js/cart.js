@@ -29,27 +29,53 @@ $(document).ready(() => {
     });
 
     $('.zmdi-delete').on('click', (e) => {
-        e.preventDefault();
         let id = e.target.dataset.id;
-        // console.log(id);
         CART.remove(id);
     });
 
-    // $('.plus').on('click', (e) => {
-    //     incrementCart(e);
-    // });
-    //
-    // $('.minus').on('click', (e) => {
-    //     decrementCart(e);
-    // });
+    $('.plus').on('click', (e) => {
+        let id = parseInt(e.target.dataset.id);
+        CART.increase(id, 1);
+    });
 
+    $('.minus').on('click', (e) => {
+        let id = parseInt(e.target.getAttribute('data-id'));
+        CART.reduce(id, 1);
+    });
+
+    $('.product-quantity').on('change', (e) => {
+        let id = parseInt(e.target.dataset.id);
+        let previousQty = parseInt(e.target.dataset.quantity);
+        let currentQty = parseInt(e.target.value);
+        let subTotal = `.product-subtotal[data-id=${ id }]`;
+        $('.product-quantity .cart-qty').attr('data-quantity', e.target.value);
+
+        let item = CART.find(id);
+        let difference = currentQty - previousQty;
+        let qty = Math.abs(difference);
+        if (difference > 0) {
+            CART.increase(id, qty);
+        } else if (difference < 0) {
+            CART.reduce(id, qty);
+        }
+        $(subTotal).html(item.bookCurrency+(currentQty*item.bookPrice).toFixed(2));
+        CART.sync();
+        CART.update(id);
+        CART.count();
+    });
+
+    $('.delete-product').on('click', (e) => {
+        let id = parseInt(e.target.dataset.id);
+        console.log(id);
+        CART.remove(id);
+        PageCart.init();
+    });
 
 });
 
 const CART = {
-    contents: [],
+    contents: (JSON.parse(localStorage.getItem('books')) ? JSON.parse(localStorage.getItem('books')) : []),
     init() {
-        //check localStorage and initialize the contents of CART.contents
         let books = JSON.parse(localStorage.getItem('books'));
 
         if (books) {
@@ -64,7 +90,8 @@ const CART = {
             $('.single__items').html(miniCartHTML);
         }
     },
-    count(books) {
+    count() {
+        let books = JSON.parse(localStorage.getItem('books'));
         let amount = Number(0);
         let sum = Number(0);
 
@@ -77,14 +104,14 @@ const CART = {
 
         $('.product_qun').html(amount);
         $('.total-sum').html(sum);
+        $('.cart-total-sum').html(sum);
     },
     sync() {
         localStorage.setItem('books', JSON.stringify(CART.contents));
-        CART.init();
     },
     find(id) {
         let math = CART.contents.filter(book => {
-            if (book.bookId === id) {
+            if (book.bookId == id) {
                 return true;
             }
         });
@@ -107,32 +134,38 @@ const CART = {
             CART.contents = [...CART.contents, book];
             //update localStorage
             CART.sync();
+            CART.init();
         }
+        CART.count();
     },
     increase(id, bookQty=1) {
         CART.contents = CART.contents.map(item => {
-            if (item.bookId === id) {
+            if (item.bookId == id) {
                 item.bookQty += bookQty;
             }
             return item;
         });
         //update localStorage
         CART.sync();
+        CART.count();
+        CART.update(id);
     },
     reduce(id, bookQty=1) {
         CART.contents = CART.contents.map(item => {
-            if (item.bookId === id) {
+            if (item.bookId == id) {
                 item.bookQty -= bookQty;
             }
             return item;
         });
-        // CART.contents.forEach(item => {
-        //     if (item.bookId === id && item.bookQty === 0) {
-        //         CART.remove(id);
-        //     }
-        // });
+        CART.contents.forEach(item => {
+            if (item.bookId == id && item.bookQty == 0) {
+                CART.remove(id);
+            }
+        });
         //update localStorage
         CART.sync();
+        CART.count();
+        CART.update(id);
     },
     remove(id) {
         CART.contents = CART.contents.filter(item => {
@@ -142,12 +175,20 @@ const CART = {
         });
         //update localStorage
         CART.sync();
+        CART.init();
     },
-    empty(){
-        //empty whole cart
-        CART.contents = [];
-        //update localStorage
-        CART.sync()
+    update(id) {
+        let $qtySelector = `.controls .qty[data-id=${ id }]`;
+        let $priceSelector = `.content .prize[data-id=${ id }]`;
+        let $qtyCartSelector = `.product-quantity .cart-qty[data-id=${ id }]`;
+
+        let itemCart = CART.find(id);
+        $($qtySelector).html(itemCart.bookQty);
+        $($qtyCartSelector).attr('data-quantity', itemCart.bookQty);
+        $($qtyCartSelector).attr('value', itemCart.bookQty);
+        $($priceSelector).html(itemCart.bookCurrency+(itemCart.bookQty*itemCart.bookPrice).toFixed(2));
+
+
     }
 };
 
@@ -155,13 +196,15 @@ const PageCart = {
     init() {
         //check localStorage and initialize the contents of PageCart.contents
         let books = JSON.parse(localStorage.getItem('books'));
-
-        if (books) {
-            $('#cart-table').html(renderTableCar(books));
+        if (books.length != 0) {
+            $('#cart-table').html(renderTableCart(books));
             PageCart.count(books);
+        } else {
+            $('#cart-table').html(renderEmptyCart());
         }
     },
-    count(books) {
+    count() {
+        let books = JSON.parse(localStorage.getItem('books'));
         let sum = Number(0);
 
         for (let i = 0; i < books.length; i++) {
@@ -172,6 +215,9 @@ const PageCart = {
 
         $('.cart-total-sum').html(sum);
     },
+    change(id) {
+
+    }
 };
 
 const renderMiniCartItem = row => `
@@ -181,11 +227,11 @@ const renderMiniCartItem = row => `
         </div>
         <div class="content">
             <h6><a href="/book/${ row.bookId }">${ row.bookTitle }</a></h6>
-            <span class="prize">${ row.bookCurrency }${ row.bookPrice * row.bookQty }</span>
+            <span class="prize" data-id=${ row.bookId }>${ row.bookCurrency }${ (row.bookPrice * row.bookQty).toFixed(2) }</span>
             <div class="product_prize d-flex justify-content-between controls">
-<!--                <span data-id=${ row.bookId } class="minus">-</span>-->
-                <span class="qun">Qty: <span class="qty">${ row.bookQty }</span></span>
-<!--                <span data-id=${ row.bookId } class="plus">+</span>-->
+                <span data-id=${ row.bookId } class="minus">-</span>
+                <span class="qun">Qty: <span  data-id=${ row.bookId } class="qty">${ row.bookQty }</span></span>
+                <span data-id=${ row.bookId } class="plus">+</span>
                 <ul class="d-flex justify-content-end">
                     <li><a href="/book/${ row.bookId }"><i class="zmdi zmdi-settings"></i></a></li>
                     <li><i data-id=${ row.bookId } class="zmdi zmdi-delete"></i></li>
@@ -197,35 +243,20 @@ const renderMiniCartItem = row => `
 
 const renderMiniCartBody = rows => rows.map(row => renderMiniCartItem(row)).join(' ');
 
-// function incrementCart(ev){
-//     // ev.preventDefault();
-//     let id = parseInt(ev.target.getAttribute('data-id'));
-//     console.log(id);
-//     // CART.increase(id, 1);
-// }
-
-// function decrementCart(ev){
-//     // ev.preventDefault();
-//     let id = parseInt(ev.target.getAttribute('data-id'));
-//     // console.log(id);
-//     CART.reduce(id, 1);
-// }
-
-
-    const renderCartTableRow = row => `
+const renderCartTableRow = row => `
     <tr>
         <td class="product-thumbnail"><a href="/book/${ row.bookId }"><img src=${ row.bookImagePath } alt=${ row.bookTitle }></a></td>
         <td class="product-name"><a href="/book/${ row.bookId }">${ row.bookTitle }</a></td>
-        <td class="product-price"><span class="amount">${ row.bookCurrency }${ row.bookPrice }</span></td>
-        <td class="product-quantity"><input type="number" value="${ row.bookQty }"></td>
-        <td class="product-subtotal">${ row.bookCurrency }${ row.bookPrice * row.bookQty }</td>
-        <td class="product-remove"><a href="#">X</a></td>
+        <td class="product-price"><span class="amount" data-id=${ row.bookId }>${ row.bookCurrency }${ row.bookPrice }</span></td>
+        <td class="product-quantity"><input type="number" class="cart-qty" data-id=${ row.bookId } data-quantity="${ row.bookQty }" value="${ row.bookQty }"></td>
+        <td class="product-subtotal" data-id=${ row.bookId }>${ row.bookCurrency }${ row.bookPrice * row.bookQty }</td>
+        <td class="product-remove"><span class="delete-product" data-id=${ row.bookId }>X</span></td>
     </tr>
     `;
 
-    const renderCartTableBody = rows => rows.map(row => renderCartTableRow(row)).join(' ');
+const renderCartTableBody = rows => rows.map(row => renderCartTableRow(row)).join(' ');
 
-const renderTableCar = (books) => `
+const renderTableCart = (books) => `
             <div class="row">
                 <div class="col-md-12 col-sm-12 ol-lg-12">
                     <form action="#">
@@ -267,3 +298,17 @@ const renderTableCar = (books) => `
             </div>
     `;
 
+const renderEmptyCart = () => `
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ol-lg-12">
+            <div class="empty-cart-content">
+                <p class="d-flex flex-wrap justify-content-center">Empty cart.</p>
+            </div>
+            <div class="cartbox__btn">
+                <ul class="cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
+                    <li><a href="/catalog">Continue shopping</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+`;

@@ -26,7 +26,7 @@ $book = $args;
                            data-price="<?php echo $book['price']; ?>"
                            data-currency="<?php echo $book['code_currency']; ?>"
                            data-image-path="<?php echo DIR_IMAGE_BOOK . $book['image_path']; ?>"
-                           href="/cart.html"><i class="bi bi-shopping-bag4"></i>
+                           href="/cart"><i class="bi bi-shopping-bag4"></i>
                         </a>
                     </li>
 <!--                    <li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>-->

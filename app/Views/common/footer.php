@@ -144,17 +144,17 @@
         </ul>
 
         <div id="cd-login"> <!-- log in form -->
-            <form class="cd-form">
+            <form class="cd-form" method="post" name="loginForm">
                 <p class="fieldset">
                     <label class="image-replace cd-email" for="signin-email">E-mail</label>
                     <input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
-                    <span class="cd-error-message">Error message here!</span>
+                    <span class="cd-error-message">Enter the correct email!</span>
                 </p>
 
                 <p class="fieldset">
                     <label class="image-replace cd-password" for="signin-password">Password</label>
-                    <input class="full-width has-padding has-border" id="signin-password" type="password"  placeholder="Password">
-                    <span class="cd-error-message">Error message here!</span>
+                    <input class="full-width has-padding has-border" id="signin-password" type="password" placeholder="Password">
+                    <span class="cd-error-message">The password should be more than 6 symbols!</span>
                 </p>
 
                 <p class="fieldset">
@@ -164,23 +164,24 @@
         </div> <!-- cd-login -->
 
         <div id="cd-signup"> <!-- sign up form -->
-            <form class="cd-form">
+            <form class="cd-form" method="post" action="/user/store" name="signUpForm">
                 <p class="fieldset">
                     <label class="image-replace cd-username" for="signup-username">Username</label>
                     <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
-                    <span class="cd-error-message">Error message here!</span>
+                    <span class="cd-error-message">Only letters and more than 2!</span>
                 </p>
 
                 <p class="fieldset">
                     <label class="image-replace cd-email" for="signup-email">E-mail</label>
                     <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
-                    <span class="cd-error-message">Error message here!</span>
+                    <span class="cd-error-message">Enter the correct email!</span>
+                    <span class="cd-error-message cd-error-message-duplicate" >This email already exists!</span>
                 </p>
 
                 <p class="fieldset">
                     <label class="image-replace cd-password" for="signup-password">Password</label>
                     <input class="full-width has-padding has-border" id="signup-password" type="password" placeholder="Password">
-                    <span class="cd-error-message">Error message here!</span>
+                    <span class="cd-error-message">The password should be more than 6 symbols!</span>
                 </p>
 
                 <p class="fieldset">

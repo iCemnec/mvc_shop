@@ -4,8 +4,14 @@
 namespace App\Controllers;
 
 
+use App\Components\Auth;
+use App\Components\ErrorHandler;
 use App\Models\User;
 use Core\Controller;
+use Core\View;
+use Exception;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class UserController extends Controller
 {
@@ -15,6 +21,116 @@ class UserController extends Controller
     {
         parent::__construct($route_params);
         $this->user = new User();
+    }
+
+    public function store()
+    {
+        try {
+            if (isset($_POST)) {
+                $data = [];
+                $data['first_name'] = htmlspecialchars(trim($_POST['username']));
+                $data['email'] = htmlspecialchars(trim($_POST['email']));
+                $data['password'] = password_hash(trim($_POST['password']), PASSWORD_DEFAULT);
+                $data['auth_token'] = sha1(random_bytes(99)) . sha1(random_bytes(99));
+                $data['role_id'] = isset($_POST['role_id']) ? htmlspecialchars(trim($_POST['role_id'])) : '3';
+
+                if (filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+
+                    if ($this->user->getColumnByValue('email', $data['email'])) {
+                        $this->validation = false;
+                    }
+
+                    if ($this->validation) {
+                        $userId = $this->user->create($data);
+
+                        Auth::set('username', $data['first_name']);
+                        Auth::set('auth_token', $data['auth_token']);
+                        Auth::set('is_auth', true);
+                        Auth::set('user_id', $userId);
+
+                        $result = [
+                            'status' => 'success',
+                            'id' => "$userId"
+                            ];
+                    } else {
+                        $result = ['status' => 'error'];
+                    }
+                    echo json_encode($result);
+                }
+            } else {
+                throw new Exception('Empty the POST array.');
+            }
+        } catch (Exception $e) {
+            $log = new Logger('UserController');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::WARNING
+                )
+            );
+            $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+        }
+    }
+
+    public function login()
+    {
+        try {
+            if (isset($_POST)) {
+                $email = htmlspecialchars(trim($_POST['email']));
+                $password = trim($_POST['password']);
+
+                $this->user = User::checkUserData($email, $password);
+                $userId = $this->user['id'];
+
+                if ($this->user) {
+                    Auth::set('is_auth', true);
+                    Auth::set('user_id', $userId);
+                    Auth::set('username', $this->user['first_name']);
+                    Auth::set('auth_token', $this->user['auth_token']);
+
+                    $result = [
+                        'status' => 'success',
+                        'id' => "$userId"
+                    ];
+                } else {
+                    $result = ['status' => 'error'];
+                }
+
+                echo json_encode($result);
+            } else {
+                throw new Exception('Empty the POST array.');
+            }
+        } catch (Exception $e) {
+            $log = new Logger('UserController');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::WARNING
+                )
+            );
+            $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+        }
+    }
+
+    public function show($data)
+    {
+        $user = $this->user->show($data);
+        View::render('account/index.php', $user);
+    }
+
+    public function edit($data)
+    {
+        $user = $this->user->show($data);
+        View::render('account/edit.php', $user);
+    }
+
+    public function logout()
+    {
+
     }
 
 }

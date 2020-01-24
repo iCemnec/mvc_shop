@@ -8,6 +8,7 @@ use App\Components\ErrorHandler;
 use Core\Model;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PDO;
 use PDOException;
 
 class User extends Model
@@ -32,6 +33,7 @@ class User extends Model
                             phone, 
                             password, 
                             role_id, 
+                            auth_token, 
                             created_at, 
                             updated_at
                             ) 
@@ -42,15 +44,17 @@ class User extends Model
                             :phone, 
                             :password, 
                             :role_id, 
+                            :auth_token, 
                             :created_at, 
                             :updated_at
                         )");
-            $stmt->bindParam(':first_name', $data['first_name']);
-            $stmt->bindParam(':last_name', $data['last_name']);
-            $stmt->bindParam(':email', $data['email']);
-            $stmt->bindParam(':phone', $data['phone']);
-            $stmt->bindParam(':password', $data['password']);
-            $stmt->bindParam(':role_id', $data['role_id']);
+            $stmt->bindParam(':first_name', $data['first_name'], PDO::PARAM_STR);
+            $stmt->bindParam(':last_name', $data['last_name'], PDO::PARAM_STR);
+            $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $data['phone'], PDO::PARAM_STR);
+            $stmt->bindParam(':password', $data['password'], PDO::PARAM_STR);
+            $stmt->bindParam(':role_id', $data['role_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':auth_token', $data['auth_token'], PDO::PARAM_STR);
             $stmt->bindParam(':created_at', $date);
             $stmt->bindParam(':updated_at', $date);
 
@@ -89,13 +93,13 @@ class User extends Model
                 updated_at = :updated_at
                 WHERE id = :user_id"
             );
-            $stmt->bindParam(':first_name', $data['first_name']);
-            $stmt->bindParam(':last_name', $data['last_name']);
-            $stmt->bindParam(':email', $data['email']);
-            $stmt->bindParam(':phone', $data['phone']);
-            $stmt->bindParam(':role_id', $data['role_id']);
+            $stmt->bindParam(':first_name', $data['first_name'], PDO::PARAM_STR);
+            $stmt->bindParam(':last_name', $data['last_name'], PDO::PARAM_STR);
+            $stmt->bindParam(':email', $data['email'], PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $data['phone'], PDO::PARAM_STR);
+            $stmt->bindParam(':role_id', $data['role_id'], PDO::PARAM_INT);
             $stmt->bindParam(':updated_at', $date);
-            $stmt->bindParam(':user_id', $data['id']);
+            $stmt->bindParam(':user_id', $data['id'], PDO::PARAM_INT);
 
             $stmt->execute();
             $db = null;
@@ -115,5 +119,42 @@ class User extends Model
             return false;
         }
     }
+
+    public static function checkUserData(string $email, string $password) {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare(
+                "SELECT * FROM " . static::getTableName().
+                " WHERE email = :email;"
+            );
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $result = $stmt->fetch();
+            $db = null;
+
+            if (!empty($result) && password_verify($password, $result['password'])) {
+                return $result;
+            } else {
+                return false;
+            }
+
+//            return !empty($result) ? $result : false;
+        } catch (PDOException $e) {
+            $log = new Logger('UserModel');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::ERROR
+                )
+            );
+            $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+            return false;
+        }
+    }
+
 
 }

@@ -24,7 +24,7 @@ class Session
     public function start()
     {
         try {
-            if ($this->sessionExists()) {
+            if (self::sessionExists()) {
                 throw new Exception('Can not start the session. The session has already started.');
             }
             return session_start();
@@ -49,7 +49,7 @@ class Session
     public function setSavePath(string $path)
     {
         try {
-            if ($this->sessionExists()) {
+            if (self::sessionExists()) {
                 throw new Exception('Can not set the session path. The session has already started.');
             }
             return session_save_path($path);
@@ -74,7 +74,7 @@ class Session
     public function setName(string $name)
     {
         try {
-            if ($this->sessionExists()) {
+            if (self::sessionExists()) {
                 throw new Exception('Can not set the session name. The session has already started.');
             }
             $this->name = $name;
@@ -99,7 +99,7 @@ class Session
     public function getName()
     {
         try {
-            if ($this->sessionExists()) {
+            if (self::sessionExists()) {
                 return session_name();
             }
             throw new Exception('Can not get the session name. The session has not started yet.');
@@ -120,7 +120,7 @@ class Session
     /**
      * @return bool
      */
-    public function sessionExists() : bool
+    public static function sessionExists() : bool
     {
         if (session_status() === PHP_SESSION_ACTIVE) {
             return true;
@@ -134,7 +134,7 @@ class Session
     public function sessionDelete()
     {
         try {
-            if ($this->sessionExists()) {
+            if (self::sessionExists()) {
                 $_SESSION = [];
                 session_unset();
                 session_destroy();
@@ -160,10 +160,10 @@ class Session
      * @param string $value
      * @return string
      */
-    public function set(string $name, string $value) : string
+    public static function set(string $name, string $value) : string
     {
         try {
-            if ($this->sessionExists()) {
+            if (self::sessionExists()) {
                 return $_SESSION[$name] = $value;
             }
             throw new Exception('Can not set the value for this name. The session has not started yet.');
@@ -186,10 +186,10 @@ class Session
      * @param string $name
      * @return mixed
      */
-    public function get(string $name)
+    public static function get(string $name)
     {
         try {
-            if ($this->sessionExists() && $this->exists($name)) {
+            if (self::sessionExists() && self::exists($name)) {
                 return $_SESSION[$name];
             }
             throw new Exception('Can not get the value for this name. This name is not exists.');
@@ -211,7 +211,7 @@ class Session
      * @param string $name
      * @return bool
      */
-    public function exists(string $name) : bool
+    public static function exists(string $name) : bool
     {
         if (isset($_SESSION[$name])) {
             return true;
@@ -227,7 +227,7 @@ class Session
     public function delete(string $name) : bool
     {
         try {
-            if ($this->exists($name)) {
+            if (self::exists($name)) {
                 unset($_SESSION[$name]);
                 return true;
             }

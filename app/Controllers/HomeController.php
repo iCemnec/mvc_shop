@@ -10,10 +10,12 @@ use Exception;
 
 class HomeController extends Controller
 {
+    protected $book;
+
     public function index()
     {
-        $book = new Book();
-        $booksNew = $book->showNew();
+        $this->book = new Book();
+        $booksNew = $this->book->showNew();
 
         if (!empty($booksNew)) {
             View::render('common/main.php', $booksNew);

@@ -48,6 +48,7 @@ $(document).ready(() => {
     $(document).keyup(function(e){
         if(e.which=='27'){
             formModal.removeClass('is-visible');
+            $('.setting__block').removeClass('is-visible');
         }
     });
 
@@ -57,15 +58,97 @@ $(document).ready(() => {
         ( $(e.target).is( tabLogin ) ) ? login_selected() : signup_selected();
     });
 
-
-    //show error messages
-    formLogin.find('input[type="submit"]').on('click', (e) => {
-        e.preventDefault();
-        formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+    $('#signup-username').unbind().blur( function() {
+        let val = $(this).val();
+        let rv_name = /^[a-zA-Zа-яА-Я0-9_]+$/;
+        if (val.length <= 2 || !rv_name.test(val)) {
+            $(this).addClass('has-error').next('span').addClass('is-visible');
+        } else {
+            $(this).removeClass('has-error').next('span').removeClass('is-visible');
+        }
     });
-    formSignup.find('input[type="submit"]').on('click', (e) => {
+
+    $('#signup-email, #signin-email').unbind().blur( function() {
+        let val = $(this).val();
+        let rv_email = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+        if (val == '' || !rv_email.test(val)) {
+            $(this).addClass('has-error').next('span').addClass('is-visible');
+        } else {
+            $(this).removeClass('has-error').next('span').removeClass('is-visible');
+        }
+        $(this).removeClass('has-error').next().next('span').removeClass('is-visible');
+    });
+
+    $('#signup-password, #signin-password').unbind().blur( function() {
+        let val = $(this).val();
+        if (val.length < 6) {
+            $(this).addClass('has-error').next('span').addClass('is-visible');
+        } else {
+            $(this).removeClass('has-error').next('span').removeClass('is-visible');
+        }
+    });
+
+
+    $('#cd-signup').on('submit', (e) => {
         e.preventDefault();
-        formSignup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        let username = $('#signup-username').val();
+        let email = $('#signup-email').val();
+        let password = $('#signup-password').val();
+
+        $.ajax({
+            url: '/user/store',
+            type: 'POST',
+            data: {
+                username: username,
+                email: email,
+                password: password
+            },
+            error: (error) => console.log(error),
+            success: (response) => {
+                let result = JSON.parse(response);
+                if (result['status'] === 'success') {
+                    formModal.removeClass('is-visible');
+                    mainSign.html(`
+                        <li><a href="/user/${ result['id'] }">Account</a></li>
+                        <li><a href="/user/${ result['id'] }/logout">Log out</a></li>
+                    `);
+                } else {
+                    $('#signup-email').addClass('has-error').next().next('span').addClass('is-visible');
+                }
+            }
+        });
+
+    });
+
+    $('#cd-login').on('submit', (e) => {
+        e.preventDefault();
+        let email = $('#signin-email').val();
+        let password = $('#signin-password').val();
+
+        $.ajax({
+            url: '/user/login',
+            type: 'POST',
+            data: {
+                email: email,
+                password: password
+            },
+            error: (error) => console.log(error),
+            success: (response) => {
+                console.log(response);
+                let result = JSON.parse(response);
+                console.log(result);
+                if (result['status'] === 'success') {
+                    formModal.removeClass('is-visible');
+                    mainSign.html(`
+                        <li><a href="/user/${ result['id'] }">Account</a></li>
+                        <li><a href="/user/${ result['id'] }/logout">Log out</a></li>
+                    `);
+                } else {
+                    $('#signup-email').addClass('has-error').next().next('span').addClass('is-visible');
+                }
+            }
+        });
+
     });
 
 });

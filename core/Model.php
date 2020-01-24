@@ -17,7 +17,7 @@ abstract class Model
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare("SELECT * FROM " . static::getTableName(). " WHERE `id` = :id");
+            $stmt = $db->prepare("SELECT * FROM " . static::getTableName(). " WHERE id = :id");
             $stmt->bindParam(':id', $data['id']);
             $stmt->execute();
 
@@ -72,13 +72,41 @@ abstract class Model
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare("DELETE FROM " . static::getTableName() . " WHERE `id` = :id");
+            $stmt = $db->prepare("DELETE FROM " . static::getTableName() . " WHERE id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
 
             $db = null;
 
             return true;
+        } catch (PDOException $e) {
+            $log = new Logger('Model');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::ERROR
+                )
+            );
+            $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+            return false;
+        }
+    }
+
+    public function getColumnByValue(string $columnName, $value)
+    {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare("SELECT * FROM " . static::getTableName() . "  WHERE " . $columnName . " = :value LIMIT 1;");
+            $stmt->bindParam(':value', $value);
+            $stmt->execute();
+
+            $result = $stmt->fetch();
+            $db = null;
+
+            return !empty($result) ? $result : false;
         } catch (PDOException $e) {
             $log = new Logger('Model');
             $log->pushHandler(

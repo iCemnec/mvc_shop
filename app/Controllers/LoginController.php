@@ -31,19 +31,21 @@ class LoginController
 
     public function show()
     {
-        if ($this->auth->isAuth()) {
-            $login = $this->session->get('login');
-            View::render('login/welcome.php', compact('login'));
-        }
+//        if ($this->auth->isAuth()) {
+//            $login = $this->session->get('login');
+//            View::render('login/welcome.php', compact('login'));
+//        }
+//
+//        if (!empty($_POST['login']) && !empty($_POST['pass'])) {
+//
+//            $login = trim(htmlspecialchars($_POST['login']));
+//            $pass = trim(htmlspecialchars($_POST['pass']));
+//
+//            $this->auth->authorization($login, $pass);
+//            View::render('login/welcome.php', compact('login'));
+//        }
 
-        if (!empty($_POST['login']) && !empty($_POST['pass'])) {
 
-            $login = trim(htmlspecialchars($_POST['login']));
-            $pass = trim(htmlspecialchars($_POST['pass']));
-
-            $this->auth->authorization($login, $pass);
-            View::render('login/welcome.php', compact('login'));
-        }
 
     }
 

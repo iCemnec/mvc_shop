@@ -4,7 +4,7 @@ namespace App\Components;
 
 use Core\View;
 
-class Auth
+class Auth extends Session
 {
     private $login = "user";
     private $pass = "pass";
@@ -15,13 +15,13 @@ class Auth
      */
     public function __construct()
     {
-        $this->session = new Session();
+        parent::__construct();
     }
 
     /**
      * @return bool|mixed
      */
-    public function isAuth()
+    public static function isAuth()
     {
         if (isset($_SESSION['is_auth'])) {
             return $_SESSION['is_auth'];
@@ -35,25 +35,25 @@ class Auth
      * @param string $pass
      * @return bool
      */
-    public function authorization(string $login, string $pass) : bool
-    {
-        if ($this->login == $login && $this->pass == $pass) {
-            $_SESSION['is_auth'] = true;
-            $_SESSION['login'] = $login;
-            View::render('login/welcome.php');
-        } else {
-            $_SESSION['is_auth'] = false;
-            return false;
-        }
-    }
+//    public function authorization(string $login, string $pass) : bool
+//    {
+//        if ($this->login == $login && $this->pass == $pass) {
+//            $_SESSION['is_auth'] = true;
+//            $_SESSION['username'] = $login;
+//            View::render('login/welcome.php');
+//        } else {
+//            $_SESSION['is_auth'] = false;
+//            return false;
+//        }
+//    }
 
     /**
      * @return bool|mixed
      */
-    public function getLogin()
+    public static function getLogin()
     {
-        if ($this->isAuth()) {
-            return $_SESSION['login'];
+        if (self::isAuth()) {
+            return $_SESSION['username'];
         }
         return false;
     }

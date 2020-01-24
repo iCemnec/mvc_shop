@@ -88,27 +88,25 @@
                         <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
                             <div class="searchbar__content setting__block">
                                 <div class="content-inner">
-<!--                                    <div class="switcher-currency">-->
-<!--                                        <strong class="label switcher-label">-->
-<!--                                            <span>My Account</span>-->
-<!--                                        </strong>-->
-<!--                                        <div class="switcher-options">-->
-<!--                                            <div class="switcher-currency-trigger">-->
-<!--                                                <div class="setting__menu">-->
-<!--                                                    <span><a href="#">My Account</a></span>-->
-<!--                                                    <span><a href="#">Sign In</a></span>-->
-<!--                                                    <span><a href="#">Sign Up</a></span>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
                                     <div class="switcher-currency">
                                     <strong class="label switcher-label">
                                         <span>My Account</span>
                                     </strong>
                                     <ul class="main-sign">
-                                        <li><span class="cd-signin">Sign in</span></li>
-                                        <li><span class="cd-signup">Sign up</span></li>
+                                        <?php
+                                            if (\App\Components\Auth::isAuth()) {
+                                                $userId = \App\Components\Auth::get('user_id');
+                                                ?>
+                                                <li><a href="/user/<?php echo $userId; ?>">Account</a></li>
+                                                <li><a href="/user/<?php echo $userId; ?>/logout">Log out</a></li>
+                                            <?php
+                                            } else {
+                                                ?>
+                                                <li><span class="cd-signin">Sign in</span></li>
+                                                <li><span class="cd-signup">Sign up</span></li>
+                                                <?php
+                                            }
+                                        ?>
                                     </ul>
                                     </div>
                                 </div>

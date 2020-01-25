@@ -6,7 +6,7 @@ define('DEBUG', true);
 
 define('ROOT', dirname(__DIR__));
 //
-//define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
+define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 //
 //var_dump(ROOT);
 //var_dump(SITE_URL);

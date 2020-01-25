@@ -90,8 +90,9 @@ class User extends Model
                 last_name = :last_name, 
                 email = :email, 
                 phone = :phone, 
+                role_id = :role_id, 
                 updated_at = :updated_at
-                WHERE id = :user_id"
+                WHERE id = :user_id;"
             );
             $stmt->bindParam(':first_name', $data['first_name'], PDO::PARAM_STR);
             $stmt->bindParam(':last_name', $data['last_name'], PDO::PARAM_STR);
@@ -140,7 +141,38 @@ class User extends Model
                 return false;
             }
 
-//            return !empty($result) ? $result : false;
+        } catch (PDOException $e) {
+            $log = new Logger('UserModel');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::ERROR
+                )
+            );
+            $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+            return false;
+        }
+    }
+
+    public function checkUserPassword(int $id, string $password) : bool
+    {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare(
+                "SELECT password FROM " . static::getTableName().
+                " WHERE id = :id;"
+            );
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetchColumn();
+            $db = null;
+
+            return (!empty($result) && password_verify($password, $result)) ? true : false;
+
         } catch (PDOException $e) {
             $log = new Logger('UserModel');
             $log->pushHandler(

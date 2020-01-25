@@ -43,11 +43,11 @@ class Author extends Model
                             :created_at, 
                             :updated_at
                         )");
-            $stmt->bindParam(':first_name', $data['first_name']);
-            $stmt->bindParam(':last_name', $data['last_name']);
-            $stmt->bindParam(':description', $data['description']);
-            $stmt->bindParam(':image_path', $data['image_path']);
-            $stmt->bindParam(':user_id', $data['user_id']);
+            $stmt->bindParam(':first_name', $data['first_name'], PDO::PARAM_STR);
+            $stmt->bindParam(':last_name', $data['last_name'], PDO::PARAM_STR);
+            $stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+            $stmt->bindParam(':image_path', $data['image_path'], PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $data['user_id'], PDO::PARAM_INT);
             $stmt->bindParam(':created_at', $date);
             $stmt->bindParam(':updated_at', $date);
 

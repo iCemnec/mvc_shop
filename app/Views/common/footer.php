@@ -164,18 +164,18 @@
         </div> <!-- cd-login -->
 
         <div id="cd-signup"> <!-- sign up form -->
-            <form class="cd-form" method="post" action="/user/store" name="signUpForm">
+            <form class="cd-form" method="post" name="signUpForm">
                 <p class="fieldset">
                     <label class="image-replace cd-username" for="signup-username">Username</label>
                     <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
-                    <span class="cd-error-message">Only letters and more than 2!</span>
+                    <span class="cd-error-message">Letters, numbers or _ and more than 2!</span>
                 </p>
 
                 <p class="fieldset">
                     <label class="image-replace cd-email" for="signup-email">E-mail</label>
                     <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
                     <span class="cd-error-message">Enter the correct email!</span>
-                    <span class="cd-error-message cd-error-message-duplicate" >This email already exists!</span>
+                    <span class="cd-error-message cd-error-message-duplicate">This email already exists!</span>
                 </p>
 
                 <p class="fieldset">

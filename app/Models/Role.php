@@ -35,7 +35,7 @@ class Role extends Model
                             :created_at, 
                             :updated_at
                         )");
-            $stmt->bindParam(':title', $data['title']);
+            $stmt->bindParam(':title', $data['title'], PDO::PARAM_STR);
             $stmt->bindParam(':created_at', $date);
             $stmt->bindParam(':updated_at', $date);
 

@@ -48,14 +48,14 @@ class Book extends Model
                             :created_at, 
                             :updated_at
                         )");
-            $stmt->bindParam(':isbn', $data['isbn']);
-            $stmt->bindParam(':title', $data['title']);
-            $stmt->bindParam(':pub_year', $data['pub_year']);
-            $stmt->bindParam(':description', $data['description']);
-            $stmt->bindParam(':quantity', $data['quantity']);
-            $stmt->bindParam(':image_path', $data['image_path']);
-            $stmt->bindParam(':user_id', $data['user_id']);
-            $stmt->bindParam(':publisher_id', $data['publisher_id']);
+            $stmt->bindParam(':isbn', $data['isbn'], PDO::PARAM_STR);
+            $stmt->bindParam(':title', $data['title'], PDO::PARAM_STR);
+            $stmt->bindParam(':pub_year', $data['pub_year'], PDO::PARAM_INT);
+            $stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+            $stmt->bindParam(':quantity', $data['quantity'], PDO::PARAM_INT);
+            $stmt->bindParam(':image_path', $data['image_path'], PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $data['user_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':publisher_id', $data['publisher_id'], PDO::PARAM_INT);
             $stmt->bindParam(':created_at', $date);
             $stmt->bindParam(':updated_at', $date);
 
@@ -98,16 +98,16 @@ class Book extends Model
                 updated_at = :updated_at
                 WHERE id = :book_id"
             );
-            $stmt->bindParam(':isbn', $data['isbn']);
-            $stmt->bindParam(':title', $data['title']);
-            $stmt->bindParam(':pub_year', $data['pub_year']);
-            $stmt->bindParam(':description', $data['description']);
-            $stmt->bindParam(':quantity', $data['quantity']);
-            $stmt->bindParam(':image_path', $data['image_path']);
-            $stmt->bindParam(':user_id', $data['id']);
-            $stmt->bindParam(':publisher_id', $data['publisher_id']);
+            $stmt->bindParam(':isbn', $data['isbn'], PDO::PARAM_STR);
+            $stmt->bindParam(':title', $data['title'], PDO::PARAM_STR);
+            $stmt->bindParam(':pub_year', $data['pub_year'], PDO::PARAM_INT);
+            $stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+            $stmt->bindParam(':quantity', $data['quantity'], PDO::PARAM_INT);
+            $stmt->bindParam(':image_path', $data['image_path'], PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $data['id'], PDO::PARAM_INT);
+            $stmt->bindParam(':publisher_id', $data['publisher_id'], PDO::PARAM_INT);
             $stmt->bindParam(':updated_at', $date);
-            $stmt->bindParam(':book_id', $data['id']);
+            $stmt->bindParam(':book_id', $data['id'], PDO::PARAM_INT);
 
             $stmt->execute();
             $db = null;

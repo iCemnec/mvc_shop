@@ -131,7 +131,7 @@ class Session
     /**
      * @return bool|int
      */
-    public function sessionDelete()
+    public static function sessionDelete()
     {
         try {
             if (self::sessionExists()) {

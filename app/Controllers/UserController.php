@@ -128,8 +128,85 @@ class UserController extends Controller
         View::render('account/edit.php', $user);
     }
 
-    public function logout()
+    public function update($data)
     {
+        try {
+            if (isset($_POST)) {
+
+                $userId = trim($_POST['userId']);
+                $password = trim($_POST['password']);
+
+                $checkPass = $this->user->checkUserPassword($userId, $password);
+
+                if ($checkPass) {
+                    $data = [];
+                    $data['id'] = htmlspecialchars(trim($_POST['userId']));
+                    $data['first_name'] = htmlspecialchars(trim($_POST['firstName']));
+                    $data['last_name'] = htmlspecialchars(trim($_POST['lastName']));
+                    $data['email'] = htmlspecialchars(trim($_POST['email']));
+                    $data['phone'] = htmlspecialchars(trim($_POST['phone']));
+                    $data['role_id'] = isset($_POST['role_id']) ? htmlspecialchars(trim($_POST['role_id'])) : '3';
+
+                    $firstName = $data['first_name'];
+
+                    $changeUser = $this->user->update($data);
+
+                    if ($changeUser) {
+                        $result = [
+                            'status' => 'success',
+                            'id' => "$userId",
+                            'first_name' => "$firstName"
+                        ];
+                    } else {
+                        $result = ['status' => 'errorUpdate'];
+                    }
+
+                } else {
+                    $result = ['status' => 'wrongPassword'];
+                }
+
+            } else {
+                $result = ['status' => 'error'];
+            }
+
+            echo json_encode($result);
+
+        } catch (Exception $e) {
+            $log = new Logger('UserController');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::WARNING
+                )
+            );
+            $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+        }
+    }
+
+    public function logout() : bool
+    {
+        try {
+            if (Auth::isAuth()) {
+                Auth::sessionDelete();
+                header('HTTP/1.1 200 OK');
+                header('Location: ' . SITE_URL);
+                return true;
+            }
+            return false;
+        } catch (Exception $e) {
+            $log = new Logger('UserController');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::WARNING
+                )
+            );
+            $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+        }
 
     }
 

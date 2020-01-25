@@ -12,15 +12,13 @@ $router->add('author/{id:\d+}', ['controller' => 'AuthorController', 'action' =>
 
 $router->add('cart', ['controller' => 'CartController', 'action' => 'index']);
 
-$router->add('login', ['controller' => 'LoginController', 'action' => 'index']);
-$router->add('login/welcome', ['controller' => 'LoginController', 'action' => 'show']);
-
 //user
 $router->add('user/store', ['controller' => 'UserController', 'action' => 'store']);
 $router->add('user/login', ['controller' => 'UserController', 'action' => 'login']);
+$router->add('user/logout', ['controller' => 'UserController', 'action' => 'logout']);
 $router->add('user/{id:\d+}', ['controller' => 'UserController', 'action' => 'show']);
-$router->add('user/{id:\d+}/logout', ['controller' => 'UserController', 'action' => 'logout']);
 $router->add('user/{id:\d+}/edit', ['controller' => 'UserController', 'action' => 'edit']);
+$router->add('user/{id:\d+}/update', ['controller' => 'UserController', 'action' => 'update']);
 
 //admin
 $router->add('admin', ['controller' => 'admin\MainController', 'action' => 'index']);

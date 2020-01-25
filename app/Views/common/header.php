@@ -98,7 +98,7 @@
                                                 $userId = \App\Components\Auth::get('user_id');
                                                 ?>
                                                 <li><a href="/user/<?php echo $userId; ?>">Account</a></li>
-                                                <li><a href="/user/<?php echo $userId; ?>/logout">Log out</a></li>
+                                                <li><a href="/user/logout">Log out</a></li>
                                             <?php
                                             } else {
                                                 ?>

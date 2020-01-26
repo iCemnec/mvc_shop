@@ -17,13 +17,6 @@ $book = $args[0];
                                     <a href="<?php echo $book['image_path']; ?>">
                                         <img src="<?php echo DIR_IMAGE_BOOK . $book['image_path']; ?>" alt="<?php echo $book['title']; ?>">
                                     </a>
-<!--                                    <a href="2.jpg"><img src="images/product/2.jpg" alt=""></a>-->
-<!--                                    <a href="3.jpg"><img src="images/product/3.jpg" alt=""></a>-->
-<!--                                    <a href="4.jpg"><img src="images/product/4.jpg" alt=""></a>-->
-<!--                                    <a href="5.jpg"><img src="images/product/5.jpg" alt=""></a>-->
-<!--                                    <a href="6.jpg"><img src="images/product/6.jpg" alt=""></a>-->
-<!--                                    <a href="7.jpg"><img src="images/product/7.jpg" alt=""></a>-->
-<!--                                    <a href="8.jpg"><img src="images/product/8.jpg" alt=""></a>-->
                                 </div>
                             </div>
                         </div>
@@ -51,7 +44,6 @@ $book = $args[0];
                                     <span><?php echo $book['code_currency'] . " "; echo $book['price']; ?></span>
                                 </div>
                                 <div class="product__overview">
-<!--                                    <p>ISBN: --><?php //echo $book['isbn']; ?><!--</p>-->
                                 </div>
                                 <div class="box-tocart d-flex">
                                     <span>Qty</span>

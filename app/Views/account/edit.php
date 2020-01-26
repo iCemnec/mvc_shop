@@ -3,7 +3,7 @@
 $user = $args;
 ?>
 
-    <!-- Start Checkout Area -->
+    <!-- Start Account Edit Area -->
     <section class="wn__checkout__area section-padding--lg bg__white">
         <div class="container">
             <div class="row">
@@ -47,7 +47,7 @@ $user = $args;
             </div>
         </div>
     </section>
-    <!-- End Checkout Area -->
+    <!-- End Account Edit Area -->
 
 <?php
 \Core\View::render('common/footer.php');

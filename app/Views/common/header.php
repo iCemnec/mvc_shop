@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title><?php echo $title; ?></title>
-    <meta name="description" content="">
+    <title><?php echo isset($title) ? $title : 'Amazing bookstore'; ?></title>
+    <meta name="description" content="<?php echo isset($description) ? $description : 'Buy books of all genres in our bookstore at a low price.'; ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Favicons -->

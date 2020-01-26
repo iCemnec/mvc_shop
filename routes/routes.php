@@ -21,4 +21,11 @@ $router->add('user/{id:\d+}/edit', ['controller' => 'UserController', 'action' =
 $router->add('user/{id:\d+}/update', ['controller' => 'UserController', 'action' => 'update']);
 
 //admin
-$router->add('admin', ['controller' => 'admin\AdminController', 'action' => 'index']);
+$router->add('admin', ['controller' => 'Admin\AdminController', 'action' => 'index']);
+$router->add('admin/genre', ['controller' => 'Admin\GenreController', 'action' => 'index']);
+$router->add('admin/genre/{id:\d+}/edit', ['controller' => 'Admin\GenreController', 'action' => 'edit']);
+$router->add('admin/genre/{id:\d+}/update', ['controller' => 'Admin\GenreController', 'action' => 'update']);
+$router->add('admin/genre/{id:\d+}/delete', ['controller' => 'Admin\GenreController', 'action' => 'delete']);
+$router->add('admin/genre/{id:\d+}/destroy', ['controller' => 'Admin\GenreController', 'action' => 'destroy']);
+$router->add('admin/genre/create', ['controller' => 'Admin\GenreController', 'action' => 'create']);
+$router->add('admin/genre/store', ['controller' => 'Admin\GenreController', 'action' => 'store']);

@@ -56,6 +56,8 @@ class UserController extends Controller
                         $result = ['status' => 'error'];
                     }
                     echo json_encode($result);
+                } else {
+                    throw new Exception('Email is not valid.');
                 }
             } else {
                 throw new Exception('Empty the POST array.');
@@ -161,8 +163,7 @@ class UserController extends Controller
                     if ($changeUser) {
                         $result = [
                             'status' => 'success',
-                            'id' => "$userId",
-                            'first_name' => "$firstName"
+                            'id' => "$userId"
                         ];
                     } else {
                         $result = ['status' => 'errorUpdate'];

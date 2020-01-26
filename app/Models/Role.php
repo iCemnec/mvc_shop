@@ -8,6 +8,7 @@ use App\Components\ErrorHandler;
 use Core\Model;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PDO;
 use PDOException;
 
 class Role extends Model

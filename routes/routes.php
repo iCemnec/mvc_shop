@@ -21,4 +21,4 @@ $router->add('user/{id:\d+}/edit', ['controller' => 'UserController', 'action' =
 $router->add('user/{id:\d+}/update', ['controller' => 'UserController', 'action' => 'update']);
 
 //admin
-$router->add('admin', ['controller' => 'admin\MainController', 'action' => 'index']);
+$router->add('admin', ['controller' => 'admin\AdminController', 'action' => 'index']);

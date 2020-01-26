@@ -90,10 +90,17 @@ class UserController extends Controller
                     Auth::set('username', $this->user['first_name']);
                     Auth::set('auth_token', $this->user['auth_token']);
 
-                    $result = [
-                        'status' => 'success',
-                        'id' => "$userId"
-                    ];
+                    if (Auth::checkAdmin()) {
+                        $result = [
+                            'status' => 'admin',
+                            'id' => "$userId"
+                        ];
+                    } else {
+                        $result = [
+                            'status' => 'success',
+                            'id' => "$userId"
+                        ];
+                    }
                 } else {
                     $result = ['status' => 'error'];
                 }
@@ -116,19 +123,19 @@ class UserController extends Controller
         }
     }
 
-    public function show($data)
+    public function show(array $data)
     {
         $user = $this->user->show($data);
         View::render('account/index.php', $user);
     }
 
-    public function edit($data)
+    public function edit(array $data)
     {
         $user = $this->user->show($data);
         View::render('account/edit.php', $user);
     }
 
-    public function update($data)
+    public function update(array $data)
     {
         try {
             if (isset($_POST)) {
@@ -185,13 +192,13 @@ class UserController extends Controller
         }
     }
 
-    public function logout() : bool
+    public function logout()
     {
         try {
             if (Auth::isAuth()) {
                 Auth::sessionDelete();
                 header('HTTP/1.1 200 OK');
-                header('Location: ' . SITE_URL);
+                header("Location: " . SITE_URL);
                 return true;
             }
             return false;
@@ -206,8 +213,8 @@ class UserController extends Controller
             $log->warning($e->getMessage());
             $error = new ErrorHandler();
             $error->exceptionHandler($e);
+            return false;
         }
-
     }
 
 }

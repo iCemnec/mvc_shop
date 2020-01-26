@@ -188,5 +188,38 @@ class User extends Model
         }
     }
 
+    public static function getRole(int $id)
+    {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare(
+                "SELECT r.title FROM roles AS r JOIN " . static::getTableName().
+                " AS u ON r.id=u.role_id WHERE u.id = :id;"
+            );
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetchColumn();
+            $db = null;
+
+            return !empty($result) ? $result : false;
+
+        } catch (PDOException $e) {
+            $log = new Logger('UserModel');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::ERROR
+                )
+            );
+            $log->error($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+            return false;
+        }
+    }
+
+
 
 }

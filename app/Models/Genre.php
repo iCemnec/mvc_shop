@@ -8,6 +8,7 @@ use App\Components\ErrorHandler;
 use Core\Model;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PDO;
 use PDOException;
 
 class Genre extends Model
@@ -37,7 +38,7 @@ class Genre extends Model
                 FROM " . static::getTableName() . " AS g 
                 JOIN book_genre AS bg ON g.id=bg.genre_id
                 WHERE bg.book_id=:id;");
-            $stmt->bindParam(':id', $data['id']);
+            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
             $stmt->execute();
 
             $result = $stmt->fetchAll();

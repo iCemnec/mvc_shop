@@ -68,7 +68,7 @@ $(document).ready(() => {
         }
     });
 
-    $('#signup-email, #signin-email, #account-edit-email').unbind().blur( function() {
+    $('#signup-email, #signin-email, #account-edit-email, #admin-login-email').unbind().blur( function() {
         let val = $(this).val();
         let rv_email = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
         if (val == '' || !rv_email.test(val)) {
@@ -79,7 +79,7 @@ $(document).ready(() => {
         $(this).removeClass('has-error').next().next('span').removeClass('is-visible');
     });
 
-    $('#signup-password, #signin-password, #account-edit-password').unbind().blur( function() {
+    $('#signup-password, #signin-password, #account-edit-password, #admin-login-password').unbind().blur( function() {
         let val = $(this).val();
         if (val.length < 6) {
             $(this).addClass('has-error').next('span').addClass('is-visible');
@@ -184,6 +184,37 @@ $(document).ready(() => {
                 }
             });
         }
+    });
+
+    $('#admin-login').on('click', (e) => {
+        e.preventDefault();
+        let email = $('#admin-login-email').val();
+        let password = $('#admin-login-password').val();
+
+        $.ajax({
+            url: '/user/login',
+            type: 'POST',
+            data: {
+                email: email,
+                password: password
+            },
+            error: (error) => console.log(error),
+            success: (response) => {
+                let result = JSON.parse(response);
+                if (result['status'] === 'success') {
+                    formModal.removeClass('is-visible');
+                    mainSign.html(`
+                        <li><a href="/user/${result['id']}">Account</a></li>
+                        <li><a href="/user/logout">Log out</a></li>
+                    `);
+                    window.location.href = `/`;
+                } else if (result['status'] === 'admin') {
+                    window.location.href = `/admin`;
+                } else {
+                    $('#admin-login-email').addClass('has-error').next('span').addClass('is-visible');
+                }
+            }
+        });
     });
 
 

@@ -2,11 +2,14 @@
 
 namespace App\Components;
 
+use App\Models\User;
 use Core\View;
+use Exception;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class Auth extends Session
 {
-    public $session;
 
     /**
      * Auth constructor.
@@ -37,5 +40,37 @@ class Auth extends Session
         }
         return false;
     }
+
+    /**
+     * @return bool
+     */
+    public static function checkAdmin(): bool
+    {
+        try {
+            if (Auth::isAuth()) {
+                $id = Auth::get('user_id');
+                $role = User::getRole($id);
+                if ($role == 'admin') {
+                    return true;
+                }
+                return false;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            $log = new Logger('Auth');
+            $log->pushHandler(
+                new StreamHandler(
+                    LOG_PATH . 'mono-log-' . date('Y-m-d') . '.log',
+                    Logger::WARNING
+                )
+            );
+            $log->warning($e->getMessage());
+            $error = new ErrorHandler();
+            $error->exceptionHandler($e);
+            return false;
+        }
+    }
+
 
 }

@@ -50,7 +50,7 @@
                         <ul class="meninmenu d-flex justify-content-start">
                             <li class="drop with--one--item"><a href="/">Home</a></li>
                             <li class="drop with--one--item"><a href="/catalog">Catalog</a></li>
-                            <li><a href="/contact.html">Contact</a></li>
+<!--                            <li><a href="/contact.html">Contact</a></li>-->
                         </ul>
                     </nav>
                 </div>

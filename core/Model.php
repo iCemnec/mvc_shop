@@ -6,6 +6,7 @@ namespace Core;
 use App\Components\ErrorHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PDO;
 use PDOException;
 
 abstract class Model
@@ -18,7 +19,7 @@ abstract class Model
             $db = static::getDB();
 
             $stmt = $db->prepare("SELECT * FROM " . static::getTableName(). " WHERE id = :id");
-            $stmt->bindParam(':id', $data['id']);
+            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
             $stmt->execute();
 
             $result = $stmt->fetch();
@@ -73,7 +74,7 @@ abstract class Model
             $db = static::getDB();
 
             $stmt = $db->prepare("DELETE FROM " . static::getTableName() . " WHERE id = :id");
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
             $db = null;

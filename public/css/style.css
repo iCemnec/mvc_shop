@@ -5165,6 +5165,7 @@ h3.widget-title-modal {
       width: 100%;
       padding: 0 0 0 10px; }
   .account__form .form__btn button,
+  .account__form .form__btn #admin-login,
   .account__form .form__btn #account-edit {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: 2px solid #333;
@@ -5177,6 +5178,7 @@ h3.widget-title-modal {
     text-transform: uppercase;
     transition: all 0.4s ease 0s; }
     .account__form .form__btn button:hover,
+    .account__form .form__btn #admin-login:hover,
     .account__form .form__btn #account-edit:hover {
       background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
       border-color: #e59285;

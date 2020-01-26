@@ -7,6 +7,7 @@ use App\Components\ErrorHandler;
 use Core\Model;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use PDO;
 use PDOException;
 
 class Book extends Model
@@ -213,7 +214,7 @@ class Book extends Model
                 JOIN authors AS a ON a.id=ab.author_id
                 WHERE bg.genre_id=:genre_id AND p.price_type_id=1;");
 
-            $stmt->bindParam(':genre_id', $data['id']);
+            $stmt->bindParam(':genre_id', $data['id'], PDO::PARAM_INT);
             $stmt->execute();
 
             $result = $stmt->fetchAll();
@@ -249,7 +250,7 @@ class Book extends Model
                 JOIN author_book AS ab ON b.id=ab.book_id 
                 JOIN authors AS a ON a.id=ab.author_id
                 WHERE b.id=:id AND p.price_type_id=1;");
-            $stmt->bindParam(':id', $data['id']);
+            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
             $stmt->execute();
 
             $result = $stmt->fetch();
@@ -286,7 +287,7 @@ class Book extends Model
                 JOIN authors AS a ON a.id=ab.author_id
                 WHERE ab.author_id=:author_id AND p.price_type_id=1;");
 
-            $stmt->bindParam(':author_id', $data['id']);
+            $stmt->bindParam(':author_id', $data['id'], PDO::PARAM_INT);
             $stmt->execute();
 
             $result = $stmt->fetchAll();
